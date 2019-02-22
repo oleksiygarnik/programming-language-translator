@@ -228,7 +228,7 @@ namespace CompilerDevelopment.Upstream_analysis
 
             List<string> all = new List<string>();
             all = Grammar.GetAllNonTerminalFirslty();
-            string sign = null;
+            //string sign = null;
             foreach (KeyValuePair<string, Dictionary<string, string>> KeyValue in tableOfRelation)
             {
                 if (all.Contains(KeyValue.Key))

@@ -14,7 +14,7 @@ namespace CompilerDevelopment.MPA
 
         public static Dictionary<int, State> Loading()
         {
-            XDocument xDocument = XDocument.Load("TableOfTransitions1.xml");
+            XDocument xDocument = XDocument.Load("TableOfTransitions.xml");
             XElement root = xDocument.Element("states");
 
             foreach (var xmlState in root.Elements())

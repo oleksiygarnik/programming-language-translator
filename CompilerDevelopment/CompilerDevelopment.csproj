@@ -55,6 +55,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GUI\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ParsePage.xaml.cs">
+      <DependentUpon>ParsePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SourceTableOfTokensInterface.xaml.cs">
+      <DependentUpon>SourceTableOfTokensInterface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TableOfAnalyzer.xaml.cs">
+      <DependentUpon>TableOfAnalyzer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TableOfAnalyzerInterface.xaml.cs">
+      <DependentUpon>TableOfAnalyzerInterface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TableOfConstantsAndIdentifier.xaml.cs">
+      <DependentUpon>TableOfConstantsAndIdentifier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TableOfConstantsInterface.xaml.cs">
+      <DependentUpon>TableOfConstantsInterface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TableOfTokensInterface.xaml.cs">
+      <DependentUpon>TableOfTokensInterface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\TableOfTransitions.xaml.cs">
+      <DependentUpon>TableOfTransitions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MPA\State.cs" />
     <Compile Include="MPA\TableOfAnalyzer.cs" />
     <Compile Include="MPA\TableOfTransitions.cs" />
@@ -65,6 +95,54 @@
     <Compile Include="Upstream analysis\NonTerminal.cs" />
     <Compile Include="Upstream analysis\TableOfRelations.cs" />
     <Compile Include="Upstream analysis\Terminal.cs" />
+    <Page Include="Graphics\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Graphics\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ParsePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SourceTableOfTokensInterface.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\TableOfAnalyzer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\TableOfAnalyzerInterface.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\TableOfConstantsAndIdentifier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\TableOfConstantsInterface.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\TableOfTokensInterface.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\TableOfTransitions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,5 +194,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MPA\TableOfTransitions.xml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

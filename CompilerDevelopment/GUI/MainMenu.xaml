@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="CompilerDevelopment.GUI.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CompilerDevelopment.GUI"
+             xmlns:y="clr-namespace:CompilerDevelopment"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="BubleButton" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+        <Style x:Key="BubleButton1" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl1}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+        <Style x:Key="BubleButton2" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl2}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+        <Style x:Key="BubleButton3" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl3}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+        <Style x:Key="BubleButton4" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl4}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+        <Style x:Key="BubleButton5" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl5}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+
+        <Style x:Key="BubleButton6" TargetType="Button">
+            <Setter Property="Template" Value="{StaticResource BubleButtonTempl6}" />
+            <Setter Property="Height" Value="150" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="{Binding ElementName=grid, Path=Background}" />
+            <Setter Property="Margin" Value="40 10" />
+        </Style>
+
+
+        <y:ScaleConverter x:Key ="ScaleConverter"></y:ScaleConverter>
+
+    </UserControl.Resources>
+    <Grid x:Name="grid" ShowGridLines="True">
+
+        <Border Width="auto" Height="auto" BorderBrush="LimeGreen" BorderThickness="2"
+                CornerRadius="0, 0,0,0">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Color="#e7ebf7" Offset="0.0"></GradientStop>
+                            <GradientStop Color="#cee3ff" Offset="0.5"></GradientStop>
+                        </GradientStopCollection>
+                    </GradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+
+                <Grid Background="#B5CBEF" Grid.Row="0" Grid.ColumnSpan="4">
+                    <TextBlock Background="#B5CBEF" Grid.ColumnSpan="3" FontSize="20" Text="New language of programming" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#4db6ea" />
+                </Grid>
+                <WrapPanel Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="10">
+                    <Button Style="{StaticResource BubleButton}" Content="{StaticResource FolderIcon}" Click="TryParse_Click" Foreground="#4db6ea" />
+                    <Button Style="{StaticResource BubleButton3}" Content="{StaticResource StarIcon}" Click="SourceTableOfTokens_Click" Foreground="#c1e045" />
+
+                    <Button Style="{StaticResource BubleButton2}" Content="{StaticResource IdiaIcon}" Click="TableOfConstantsAndIdentifier_Click" Foreground="#f2a035" />
+                </WrapPanel>
+
+
+                <WrapPanel Grid.Row="2" Grid.ColumnSpan="4" HorizontalAlignment="Center" Margin="10">
+                    <Button Style="{StaticResource BubleButton1}" Content="{StaticResource StarIcon}" Click="TableOfTokens_Click" Foreground="#4db6ea" />
+                    <Button Style="{StaticResource BubleButton4}" Content="{StaticResource IdiaIcon}" Click="TableAnalyzer_Click" Foreground="#c1e045" />
+                    <Button Style="{StaticResource BubleButton5}" Content="{StaticResource FolderIcon}" Click="TableTransitions_Click" Foreground="#f2a035" />
+                    <Button Style="{StaticResource BubleButton6}" Content="{StaticResource SettingIcon}" Click="Setting_Click" Foreground="#c1e045" />
+                </WrapPanel>
+                <Grid Background="#B5CBEF" Grid.Row="3" Grid.ColumnSpan="4">
+                    <TextBlock Grid.Row="3" Grid.ColumnSpan="3" FontSize="20" Text="Created By Leha Garnich" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#4db6ea" />
+                </Grid>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

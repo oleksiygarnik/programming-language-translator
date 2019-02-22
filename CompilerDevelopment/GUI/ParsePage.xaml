@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="CompilerDevelopment.GUI.ParsePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CompilerDevelopment.GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#efefef">
+        <Border Width="auto" Height="auto" BorderBrush="LimeGreen" BorderThickness="2"
+                CornerRadius="0, 0,0,0">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientBrush.GradientStops>
+                        <GradientStopCollection>
+                            <GradientStop Color="#e7ebf7" Offset="0.0"></GradientStop>
+                            <GradientStop Color="#cee3ff" Offset="0.5"></GradientStop>
+                        </GradientStopCollection>
+                    </GradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+
+                </Grid.RowDefinitions>
+
+                <Grid Background="#B5CBEF" Grid.Row="0" Grid.ColumnSpan="4">
+                    <TextBlock  Background="#B5CBEF" Grid.ColumnSpan="3" FontSize="20" Text="Компилятор" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#4db6ea" />
+                </Grid>
+                <TextBox  Grid.Row="1" AcceptsReturn="True" Name ="TextCode" Grid.ColumnSpan="4" Margin="100 30 " TextAlignment="Left" RenderTransformOrigin="0.5,0.5">
+                    <TextBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-16200.471"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBox.RenderTransform> Введите текст
+                </TextBox>
+
+                <TextBox Name ="ListError" Grid.Row="2" Grid.ColumnSpan="4" Margin="100 0" TextAlignment="Left" VerticalScrollBarVisibility="Auto" >Список ошибок</TextBox>
+
+                <Button Grid.Row="3" Width="40" Margin="20 20" HorizontalAlignment="Left" Click="BackToMainMenu_Click">Back</Button>
+                <Button Name ="parse" Click ="Compiler_Click" Grid.Row ="3" Grid.Column="2" Content="Парсить" Margin="15" BorderBrush="LightBlue" BorderThickness="3"></Button>
+                <Button Click ="Delete_Click" Grid.Row ="3" Grid.Column="1" Content="Очистить" Margin="15" BorderBrush="LightBlue" BorderThickness="3"></Button>
+                <Button Click ="Open_Click" Grid.Row ="3" Grid.Column="3" Content="Открыть файл" Margin="15" BorderBrush="LightBlue" BorderThickness="3"></Button>
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

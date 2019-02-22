@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace CompilerDevelopment.Graphics
+namespace CompilerDevelopment
 {
     class BrushConverter : IValueConverter
     {

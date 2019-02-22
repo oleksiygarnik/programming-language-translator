@@ -1,5 +1,6 @@
 ﻿using CompilerDevelopment.Entities;
 using CompilerDevelopment.Graphics;
+using CompilerDevelopment.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace CompilerDevelopment
             InitializeComponent();
             TableOfTokens.ReadFromFile();
             Switcher.pageSwitcher = this;
+            ScaleConverter sc = new ScaleConverter();
+            ContentConverter cc = new ContentConverter();
+            ScaleConverter sco = new ScaleConverter();
             Switcher.Switch(new MainMenu());
         }
 

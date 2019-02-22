@@ -1,0 +1,508 @@
+﻿<states>
+  <state id="1" final="false">
+    <error>Очікуються символи(, -, id, const</error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>4</destination>
+    </link>
+    <link>
+      <class>const</class>
+      <stack></stack>
+      <destination>4</destination>
+    </link>
+    <link>
+      <class>(</class>
+      <stack>3</stack>
+      <destination>1</destination>
+    </link>
+    <link>
+      <class>-</class>
+      <stack></stack>
+      <destination>2</destination>
+    </link>
+
+  </state>
+  <state id="2" final="false">
+    <error>Очікуються символи(, id, const</error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>4</destination>
+    </link>
+    <link>
+      <class>const</class>
+      <stack></stack>
+      <destination>4</destination>
+    </link>
+    <link>
+      <class>(</class>
+      <stack>3</stack>
+      <destination>1</destination>
+    </link>
+
+  </state>
+  <state id="3" final="false">
+    <error>Очікується символ )</error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>)</class>
+      <stack></stack>
+      <destination>4</destination>
+    </link>
+
+  </state>
+  <state id="4" final="true">
+    <error>Очікуються символи +, -, /, *</error>
+    <info>[!=] - Exit</info>
+    <link>
+      <class>+</class>
+      <stack></stack>
+      <destination>2</destination>
+    </link>
+    <link>
+      <class>-</class>
+      <stack></stack>
+      <destination>2</destination>
+    </link>
+    <link>
+      <class>*</class>
+      <stack></stack>
+      <destination>2</destination>
+    </link>
+    <link>
+      <class>/</class>
+      <stack></stack>
+      <destination>2</destination>
+    </link>
+
+  </state>
+
+  <state id="5" final="false">
+    <error>Очікуються символи not, true, false, [</error>
+    <info>[!=] - SubAuto(destination: 1, stack: 6)</info>
+    <link>
+      <class>not</class>
+      <stack></stack>
+      <destination>5</destination>
+    </link>
+    <link>
+      <class>true</class>
+      <stack></stack>
+      <destination>7</destination>
+    </link>
+    <link>
+      <class>false</class>
+      <stack></stack>
+      <destination>7</destination>
+    </link>
+    <link>
+      <class>[</class>
+      <stack>8</stack>
+      <destination>5</destination>
+    </link>
+
+  </state>
+
+  <state id="6" final="false">
+    <error>Очікуються символи &lt;, &lt;=, =, !=, >, >= </error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>&lt;</class>
+      <stack>7</stack>
+      <destination>1</destination>
+    </link>
+    <link>
+      <class>&lt;=</class>
+      <stack>7</stack>
+      <destination>1</destination>
+    </link>
+    <link>
+      <class>==</class>
+      <stack>7</stack>
+      <destination>1</destination>
+    </link>
+    <link>
+      <class>!=</class>
+      <stack>7</stack>
+      <destination>1</destination>
+    </link>
+    <link>
+      <class>></class>
+      <stack>7</stack>
+      <destination>1</destination>
+    </link>
+    <link>
+      <class>>=</class>
+      <stack>7</stack>
+      <destination>1</destination>
+    </link>
+
+  </state>
+  <state id="7" final="true">
+    <error>Очікуються символи and, or </error>
+    <info> [!=] - Exit</info>
+    <link>
+      <class>and</class>
+      <stack></stack>
+      <destination>5</destination>
+    </link>
+    <link>
+      <class>or</class>
+      <stack></stack>
+      <destination>5</destination>
+    </link>
+
+  </state>
+  <state id ="8" final ="false">
+    <error>Очікуються символи ] </error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>]</class>
+      <stack></stack>
+      <destination>7</destination>
+    </link>
+
+  </state>
+
+  <state id ="9" final ="false">
+    <error>Очікуються символи int, float </error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>int</class>
+      <stack></stack>
+      <destination>10</destination>
+    </link>
+    <link>
+      <class>float</class>
+      <stack></stack>
+      <destination>10</destination>
+
+    </link>
+
+  </state>
+
+  <state id ="10" final ="false">
+    <error>Очікуються символи id </error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>11</destination>
+    </link>
+
+  </state>
+
+  <state id ="11" final ="false">
+    <error>Очікуються символи ',', ;, } </error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>,</class>
+      <stack></stack>
+      <destination>10</destination>
+    </link>
+    <link>
+      <class>;</class>
+      <stack></stack>
+      <destination>9</destination>
+    </link>
+    <link>
+      <class>{</class>
+      <stack>12</stack>
+      <destination>15</destination>
+    </link>
+
+  </state>
+
+  <state id ="12" final ="false">
+    <link>
+      <class>;</class>
+      <stack></stack>
+      <destination>13</destination>
+    </link>
+    <error>Очікуються символи ; </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="13" final ="true">
+    <error>Очікуються символи } </error>
+    <info>
+      [=] - Exit
+      [!=] - SubAuto(destination: 15, stack: 12)
+    </info>
+    <link>
+      <class>}</class>
+      <stack></stack>
+      <destination></destination>
+    </link>
+  </state>
+
+  <state id ="14" final ="true">
+    <link>
+      <class></class>
+      <stack></stack>
+      <destination></destination>
+    </link>
+  </state>
+
+
+  <state id ="15" final ="false">
+    <error>Очікуються символи id, cin, cout, for, if </error>
+    <info>[!=] - Error</info>
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>16</destination>
+    </link>
+    <link>
+      <class>cin</class>
+      <stack></stack>
+      <destination>18</destination>
+    </link>
+    <link>
+      <class>cout</class>
+      <stack></stack>
+      <destination>21</destination>
+    </link>
+    <link>
+      <class>for</class>
+      <stack></stack>
+      <destination>24</destination>
+    </link>
+    <link>
+      <class>if</class>
+      <stack>32</stack>
+      <destination>5</destination>
+    </link>
+
+  </state>
+
+
+  <state id ="16" final ="false">
+    <link>
+      <class>=</class>
+      <stack>17</stack>
+      <destination>1</destination>
+    </link>
+    <error>Очікуються символи = </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="17" final ="false">
+    <link>
+      <class></class>
+      <stack></stack>
+      <destination></destination>
+    </link>
+    <error>Очікуються символи = </error>
+    <info>[!=] - Exit</info>
+  </state>
+
+
+
+  <state id ="18" final ="false">
+    <link>
+      <class>&lt;&lt;</class>
+      <stack></stack>
+      <destination>19</destination>
+    </link>
+    <error>Очікуються символи &lt;&lt; </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="19" final ="false">
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>20</destination>
+    </link>
+    <error>Очікуються символи id </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="20" final ="true">
+    <link>
+      <class>&lt;&lt;</class>
+      <stack></stack>
+      <destination>19</destination>
+    </link>
+
+    <error>Очікуються символи &lt;&lt; </error>
+    <info>[!=] - Exit</info>
+  </state>
+
+
+  <state id ="21" final ="false">
+    <link>
+      <class>>></class>
+      <stack></stack>
+      <destination>22</destination>
+    </link>
+
+    <error>Очікуються символи >> </error>
+    <info>[!=] - Error</info>
+  </state>
+
+
+  <state id ="22" final ="false">
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>23</destination>
+    </link>
+
+    <error>Очікуються символи id </error>
+    <info>[!=] - Error</info>
+
+  </state>
+
+
+
+  <state id ="23" final ="false">
+    <link>
+      <class>>></class>
+      <stack></stack>
+      <destination>22</destination>
+    </link>
+
+    <error>Очікуються символи >> </error>
+    <info>[!=] - Exit</info>
+
+  </state>
+
+
+
+  <state id ="24" final ="false">
+    <link>
+      <class>id</class>
+      <stack></stack>
+      <destination>25</destination>
+    </link>
+
+    <error>Очікуються символи id </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="25" final ="false">
+    <link>
+      <class>=</class>
+      <stack>26</stack>
+      <destination>1</destination>
+    </link>
+
+    <error>Очікуються символи = </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="26" final ="false">
+    <link>
+      <class>to</class>
+      <stack>27</stack>
+      <destination>1</destination>
+    </link>
+
+    <error>Очікуються символ to </error>
+    <info>[!=] - Error</info>
+  </state>
+
+
+
+  <state id ="27" final ="false">
+    <link>
+      <class>step</class>
+      <stack>28</stack>
+      <destination>1</destination>
+    </link>
+    <error>Очікуються символ step </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="28" final ="false">
+    <link>
+      <class>do</class>
+      <stack>29</stack>
+      <destination>15</destination>
+    </link>
+    <error>Очікуються символ do </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="29" final ="false">
+    <link>
+      <class>;</class>
+      <stack></stack>
+      <destination>30</destination>
+    </link>
+    <error>Очікуються символ ; </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="30" final ="false">
+    <link>
+      <class>next</class>
+      <stack></stack>
+      <destination>31</destination>
+    </link>
+    <error>Очікуються символ next </error>
+    <info>
+      [=] - Exit
+      [!=] - SubAuto(destination: 15, stack: 29)
+    </info>
+  </state>
+
+  <state id ="32" final ="false">
+    <link>
+      <class>;</class>
+      <stack>33</stack>
+      <destination>15</destination>
+    </link>
+    <error>Очікуються символ ; </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="33" final ="false">
+    <link>
+      <class>;</class>
+      <stack></stack>
+      <destination>34</destination>
+    </link>
+    <error>Очікуються символ ; </error>
+    <info>[!=] - Error</info>
+  </state>
+
+  <state id ="34" final ="false">
+    <link>
+      <class>else</class>
+      <stack>35</stack>
+      <destination>15</destination>
+    </link>
+    <error>Очікуються символ else </error>
+    <info>[!=] - SubAuto(destination:15, stack:33)</info>
+  </state>
+
+  <state id ="35" final ="false">
+    <link>
+      <class>;</class>
+      <stack></stack>
+      <destination>36</destination>
+    </link>
+    <error>Очікуються символ ; </error>
+    <info>[!=] - Error</info>
+  </state>
+
+
+  <state id ="36" final ="false">
+    <link>
+      <class>endif</class>
+      <stack></stack>
+      <destination>37</destination>
+    </link>
+    <error>Очікуються символ endif </error>
+    <info>
+      [=] - Exit
+      [!=] - SubAuto(destination:15, stack:35)
+    </info>
+  </state>
+</states>

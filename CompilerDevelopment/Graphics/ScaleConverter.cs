@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace CompilerDevelopment.Graphics
+namespace CompilerDevelopment
 {
     class ScaleConverter : IValueConverter
     {
