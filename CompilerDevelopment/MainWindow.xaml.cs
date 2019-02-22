@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CompilerDevelopment.Entities;
+using CompilerDevelopment.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,15 @@ namespace CompilerDevelopment
         public MainWindow()
         {
             InitializeComponent();
+            TableOfTokens.ReadFromFile();
+            Switcher.pageSwitcher = this;
+            Switcher.Switch(new MainMenu());
         }
+
+        public void Navigate(UserControl nextPage)
+        {
+            this.Content = nextPage;
+        }
+
     }
 }

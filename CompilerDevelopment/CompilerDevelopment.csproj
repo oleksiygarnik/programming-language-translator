@@ -55,6 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MPA\State.cs" />
+    <Compile Include="MPA\TableOfAnalyzer.cs" />
+    <Compile Include="MPA\TableOfTransitions.cs" />
+    <Compile Include="RecursiveDescent\SyntaxAnalyzer.cs" />
+    <Compile Include="Upstream analysis\Element.cs" />
+    <Compile Include="Upstream analysis\Grammar.cs" />
+    <Compile Include="Upstream analysis\Node.cs" />
+    <Compile Include="Upstream analysis\NonTerminal.cs" />
+    <Compile Include="Upstream analysis\TableOfRelations.cs" />
+    <Compile Include="Upstream analysis\Terminal.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,6 +73,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entities\SemanticDataValidation.cs" />
+    <Compile Include="Entities\SourceTableOfTokens.cs" />
+    <Compile Include="Entities\TableOfConstants.cs" />
+    <Compile Include="Entities\TableOfIdentifiers.cs" />
+    <Compile Include="Entities\TableOfTokens.cs" />
+    <Compile Include="Entities\Token.cs" />
+    <Compile Include="Entities\Validation.cs" />
+    <Compile Include="Graphics\BrushConverter.cs" />
+    <Compile Include="Graphics\ContentConverter.cs" />
+    <Compile Include="Graphics\ISwitchable.cs" />
+    <Compile Include="Graphics\ScaleConverter.cs" />
+    <Compile Include="Graphics\Switcher.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
