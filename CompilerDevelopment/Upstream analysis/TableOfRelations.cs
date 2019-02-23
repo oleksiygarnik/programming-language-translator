@@ -198,6 +198,7 @@ namespace CompilerDevelopment.Upstream_analysis
                     foreach (KeyValuePair<string, string> KeyValue1 in KeyValue.Value)
                     {
                         dict.TryGetValue(KeyValue1.Key, out sign);
+                        dict[KeyValue1.Key] = "<";
                         //if (sign == "=" || sign == ">")
                         //{
                         //    dict[KeyValue1.Key] = "<";

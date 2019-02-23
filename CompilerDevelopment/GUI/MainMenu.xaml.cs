@@ -1,5 +1,6 @@
 ﻿using CompilerDevelopment.Graphics;
 using CompilerDevelopment.Upstream_analysis;
+using CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,19 @@ namespace CompilerDevelopment.GUI
 
             Grammar.Loading();
             TableOfRelations.LoadFields();
+            TableOfRelations.LoadEquels();
 
-            //TableOfRelation.LoadEquels();
+            TableOfRelations.LoadSupportTable();
+            TableOfRelations.LoadLessSign();
+            TableOfRelations.LoadMoreSign();
+            TableOfRelations.TwoNonTernminal();
+            foreach (var item in TableOfRelations.tableOfRelation)
+            {
 
-            //TableOfRelation.LoadSupportTable();
-            //TableOfRelation.LoadLessSign();
-            //TableOfRelation.LoadMoreSign();
-            //TableOfRelation.TwoNonTernminal();
+            }
+            
         }
+
 
         private void TryParse_Click(object sender, RoutedEventArgs e)
         {

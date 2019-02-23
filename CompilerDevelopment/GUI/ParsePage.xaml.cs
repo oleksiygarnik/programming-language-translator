@@ -1,6 +1,7 @@
 ﻿using CompilerDevelopment.Entities;
 using CompilerDevelopment.Graphics;
 using CompilerDevelopment.RecursiveDescent;
+using CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysis;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -33,16 +34,21 @@ namespace CompilerDevelopment.GUI
             //{
             //    TextCode.Text = sr.ReadToEnd();
             //}
-            if (TextCode.Text == "")
-            {
+            TextCode.Text = Storage.StringTemplate;
+            //if (TextCode.Text == "")
+            //{
 
-                parse.IsEnabled = false;
-            }
+            //    parse.IsEnabled = false;
+            //}
+            Storage.StringTemplate = TextCode.Text;
         }
+
 
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
         {
             Switcher.Switch(new MainMenu());
+            Storage.StringTemplate = TextCode.Text;
+
             //SyntaxAnalyzer.errors.Clear();
         }
 
@@ -51,6 +57,8 @@ namespace CompilerDevelopment.GUI
             TextCode.Text = "";
             ListError.Text = "";
             RecursiveDescent.SyntaxAnalyzer.errors.Clear();
+            Storage.StringTemplate = TextCode.Text;
+
             // parse.IsEnabled = false;
 
         }
@@ -64,6 +72,7 @@ namespace CompilerDevelopment.GUI
                 if (openFileDialog.ShowDialog() == true)
                 {
                     TextCode.Text = File.ReadAllText(openFileDialog.FileName);
+                    Storage.StringTemplate = TextCode.Text;
                 }
             }
         }
@@ -109,6 +118,8 @@ namespace CompilerDevelopment.GUI
                             }
                             break;
                         case "MPA":
+                            TableOfUpstreamParsing.Loading2();
+
                             MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
                             string error = MPA.TableOfAnalyzer.PushInTable(9);
                             ListError.Text += "\n";
@@ -149,6 +160,7 @@ namespace CompilerDevelopment.GUI
             //{
             //    TextCode.Text = "Ошибка";
             //}
+            Storage.StringTemplate = TextCode.Text;
         }
 
 

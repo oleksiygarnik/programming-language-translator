@@ -67,6 +67,7 @@
     <Compile Include="GUI\SourceTableOfTokensInterface.xaml.cs">
       <DependentUpon>SourceTableOfTokensInterface.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Storage.cs" />
     <Compile Include="GUI\TableOfAnalyzer.xaml.cs">
       <DependentUpon>TableOfAnalyzer.xaml</DependentUpon>
     </Compile>
@@ -93,6 +94,7 @@
     <Compile Include="Upstream analysis\Grammar.cs" />
     <Compile Include="Upstream analysis\Node.cs" />
     <Compile Include="Upstream analysis\NonTerminal.cs" />
+    <Compile Include="Upstream analysis\SyntaxAnalyzerForUpstreamAnalysis\TableOfUpstreamParsing.cs" />
     <Compile Include="Upstream analysis\TableOfRelations.cs" />
     <Compile Include="Upstream analysis\Terminal.cs" />
     <Page Include="Graphics\Generic.xaml">
