@@ -87,7 +87,7 @@ namespace CompilerDevelopment.Upstream_analysis
 
             List<string> all = new List<string>();
             all = Grammar.GetAllNonTerminalFirslty();
-            string sign = null;
+             string sign = null;
             foreach (KeyValuePair<string, Dictionary<string, string>> KeyValue in tableOfRelation)
             {
                 if (all.Contains(KeyValue.Key))
@@ -96,33 +96,38 @@ namespace CompilerDevelopment.Upstream_analysis
                     {
                         if (KeyValueNext.Value == "=")
                         {
-                            Dictionary<string, string> Save1 = new Dictionary<string, string>();
+                            
                             supportTable.TryGetValue("LastPlus", out dict1);
-                            {
+                            
                                 dict1.TryGetValue(KeyValue.Key, out elements); // получаем все элементы которые будут >
-                                                                               // tableOfRelation.TryGetValue(KeyValue.Key, out dict);
-                                                                               // {
-                                foreach (var item in elements)
+                            Dictionary<string, string> Save1;
+
+
+
+
+                                    foreach (var item in elements)
+                                    {
+                                      Save1 = new Dictionary<string, string>();
+                                      Save1[KeyValueNext.Key] = ">";
+
+                                        if (Save.TryGetValue(item.Name, out dict))
+                                        {
+                                            dict[KeyValueNext.Key] = ">";
+                                        }
+                                        else
+                                        {
+                                            Save[item.Name] = Save1;
+                                        }
+                                string lol;
+                                Save1.TryGetValue("-",out lol);
+                                if(lol==">")
                                 {
-                                    // if (dict.TryGetValue(item.Name, out sign))
-                                    // {
-                                    Save1[KeyValueNext.Key] = ">";
-
-                                    //  }
-                                    if (Save.TryGetValue(item.Name, out dict2))
-                                    {
-                                        dict2[KeyValueNext.Key] = ">";
-                                    }
-                                    else
-                                    {
-                                        Save[item.Name] = Save1;
-                                    }
-
+                                    int a;
                                 }
-
-
-                                //   }
-                            }
+                                    
+                                    }
+                                
+       
                         }
                     }
                 }
@@ -135,7 +140,7 @@ namespace CompilerDevelopment.Upstream_analysis
                     foreach (KeyValuePair<string, string> KeyValue1 in KeyValue.Value)
                     {
                         dict.TryGetValue(KeyValue1.Key, out sign);
-                        dict[KeyValue1.Key] = ">";
+                        dict[KeyValue1.Key] += ">";
                     }
 
                 }
@@ -198,7 +203,7 @@ namespace CompilerDevelopment.Upstream_analysis
                     foreach (KeyValuePair<string, string> KeyValue1 in KeyValue.Value)
                     {
                         dict.TryGetValue(KeyValue1.Key, out sign);
-                        dict[KeyValue1.Key] = "<";
+                        dict[KeyValue1.Key] += "<";
                         //if (sign == "=" || sign == ">")
                         //{
                         //    dict[KeyValue1.Key] = "<";
@@ -355,8 +360,10 @@ namespace CompilerDevelopment.Upstream_analysis
 
                 foreach (var node in nodes) // проганяю все правила
                 {
+                    
                     int lastElem = node.elements.Count - 1;
                     nodesForSupporTableLastPlus.Add(node.elements[lastElem]); // заполняем First
+                    
                     if (node.elements[lastElem] is NonTerminal)
                     {
                         //var listsB = nodesForSupporTableFirstPlus.SelectMany(x => x.Li);
@@ -382,7 +389,7 @@ namespace CompilerDevelopment.Upstream_analysis
                         if (node.elements[lastElem] is NonTerminal && node.elements[lastElem].Name != name)
                         //if (node.elements[lastElem] is Terminal)
                         {
-                            elem.AddRange(GetElementByFirstPLus(node.elements[lastElem].Name));
+                            elem.AddRange(GetElementByLastPLus(node.elements[lastElem].Name));
                         }
                     }
                 }

@@ -1,6 +1,7 @@
 ﻿using CompilerDevelopment.Entities;
 using CompilerDevelopment.Graphics;
 using CompilerDevelopment.RecursiveDescent;
+using CompilerDevelopment.Upstream_analysis;
 using CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysis;
 using Microsoft.Win32;
 using System;
@@ -85,6 +86,9 @@ namespace CompilerDevelopment.GUI
             SourceTableOfTokens.SourceListOfTokens.Clear();
             TableOfConstants.ConstantListOfTokens.Clear();
             TableOfIdentifiers.IdentifierListOfTokens.Clear();
+
+           
+
             string path = @"D:\ASM\testLabCompiler1.txt";
             string code = TextCode.Text;
             using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default))
@@ -118,13 +122,21 @@ namespace CompilerDevelopment.GUI
                             }
                             break;
                         case "MPA":
-                            TableOfUpstreamParsing.Loading2();
+                            
 
                             MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
                             string error = MPA.TableOfAnalyzer.PushInTable(9);
                             ListError.Text += "\n";
                             ListError.Text += error;
                             break;
+
+                        case "UpstreamParsing":
+                            TableOfUpstreamParsing.tableOfUpstreamParsing.Clear();
+                            
+
+                            TableOfUpstreamParsing.Loading2();
+                            break;
+
                     }
 
                     //SyntaxAnalyzer.Analyze(0);

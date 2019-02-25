@@ -26,7 +26,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
         public static void Loading2()
         {
-            Int32 step = 0;
+            int step = 0;
             //закидываем в стек первый элемент
             Stack<string> tokenStack = new Stack<string>();
 
@@ -42,56 +42,27 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             tokenStack.Push("#");
 
 
-            //// проверяем, что за знак
-            //string sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek());
-
-            //Raw raw1 = new Raw()
-            //{
-            //    Step = step++,
-            //    TokenStack = string.Join(", ", tokenStack),
-            //    Sign = sign,
-            //    TokenQueue = string.Join(", ", tokenQueue)
-            //};
-
-            //tableOfUpstreamParsing.Add(raw1);
-            //// следующая итерация, проверяем на знак, чтобы понять, какой будет дальше стек и очередь
-            //if(sign == "<" || sign == "=")
-            //{
-            //    tokenStack.Push(tokenQueue.Dequeue());
-            //}
-            //else if(sign == ">")
-            //{
-            //    int count = tableOfUpstreamParsing.Count() - 1;
-
-            //    //идем в обратном порядке и ищем где был знак меньше
-            //    for(int i = count; i >=0; i--)
-            //    {
-            //        if(tableOfUpstreamParsing[i].Sign == "<")
-            //        {
-            //            string[] words = tableOfUpstreamParsing[i].TokenQueue.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            //            string basis = tableOfUpstreamParsing[i].TokenQueue;
-            //        }
-            //    }
-            //    //тут будет щас логика
-            //}
-
             //NEXT
             string sign;
             string basis = null;
-            while (tokenQueue.Count != 1)
+            while (tokenQueue.Count != 0)
             {
 
-                sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek());
-        
+                 sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek());
+                if (sign == null)
+                {
+                    throw new Exception("LOH");
+                }
 
                 Raw raw = new Raw()
                 {
-                    Step = step++,
-                    TokenStack = string.Join(", ", tokenStack),
+                    Step = step++, 
+                    TokenStack = string.Join(" ", tokenStack),
                     Sign = sign,
-                    TokenQueue = string.Join(", ", tokenQueue)
+                    TokenQueue = string.Join("   ", tokenQueue)
                 };
+
+                //string lol = string.Join(" ", tokenStack);
 
                 tableOfUpstreamParsing.Add(raw);
 
@@ -101,117 +72,103 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
                 }
                 else if (sign == ">")
                 {
-                    Node node1 = new Node();
-                    int count = tableOfUpstreamParsing.Count() - 1;
+                    PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign);
+                }
 
-                    tokenStack.Reverse().ToArray();
-
-                    for(int i = 0; i < tokenStack.Count(); i++)
-                    {    
-                        string sign1 = CheckSign(tokenStack.ToArray()[i+1], tokenStack.ToArray()[i]);
-                        if (sign1 == "<")
-                        {
-                            while ((i+1)!=0)
-                            {
-                                Terminal elem = new Terminal(tokenStack.ToArray()[i]); //???????????????????????????????/
-                                node1.elements.Add(elem);
-
-                                basis += tokenStack.ToArray()[i] + " ";
-                                i--;
-                            }
-                            break;
-                        }
-                    }
-
-                    //////идем в обратном порядке и ищем где был знак меньше
-                    ////for (int i = count; i >= 0; i--)
-                    ////{
-                    ////    if (tableOfUpstreamParsing[i].Sign == "<")
-                    ////    {
-                    ////        string[] words = tableOfUpstreamParsing[i].TokenQueue.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    ////        for (int j = 0; j < words.Count(); j++)
-                    ////        {
-                    ////            words[j] = words[j].Trim();
-                    ////            if (words[j] != tokenQueue.Peek())
-                    ////            {
-                    ////                basis += words[j] + " ";
-                    ////                string lol = tokenQueue.Peek();
-                    ////            }
-                    ////            else
-                    ////            {
-                    ////                break;
-                    ////            }
-                    ////        }
-                    ////        if (basis != null)
-                    ////        {
-                    ////            break;
-                    ////        }
-                    ////    }
-                    ////}
-
-
-
-                    basis = basis.Trim();
-                    if(TableOfIdentifiers.TokenIsContained(basis))
+                if(tokenStack.Contains("programm"))
+                {
+                    Raw raw1 = new Raw()
                     {
-                        basis = "idn";
-                    }
-                    for(int i = 0; i < node1.elements.Count; i++)
-                    {
-                        if(TableOfIdentifiers.TokenIsContained(node1.elements[i].Name))
-                        {
-                            node1.elements[i].Name = "idn";
-                        }
-                    }
-                    string replaceElem = null;
-                    //нужно заменить основу на нетерминал
-                    foreach (KeyValuePair<NonTerminal, List<Node>> KeyValue in Grammar.MyGrammar)
-                    {
-                        foreach (var node in KeyValue.Value)
-                        {
-                            //foreach (var elem in node.elements)
-                            //{
-                                if(node.Equals(node1))
-                                //if (elem.Name == basis)
-                                {
-                                    replaceElem = KeyValue.Key.Name;
-                                    break;
-                                }
-                                if (replaceElem != null)
-                                {
-                                    break;
-                                }
-                           // }
-                        }
-                        if (replaceElem != null)
-                        {
-                            break;
-                        }
-                    }
-
-                    basis = null;
-                    int counter = node1.elements.Count;
-                    while(counter!=0)
-                    {
-                        tokenStack.Pop();
-                        counter--;
-                    }
-                    //tokenStack.Pop();
-                    tokenStack.Push(replaceElem);
-                    replaceElem = null;
-
-
-
-                        //string NewSign = CheckSign(tokenStack.Pop(), tokenStack.Peek());
-                        //тут будет щас логика
-                    }
-
+                        Step = step++,
+                        TokenStack = string.Join(" ", tokenStack),
+                        Sign = sign,
+                        TokenQueue = string.Join(" ", tokenQueue)
+                    };
+                    tableOfUpstreamParsing.Add(raw1);
+                    break;
+                }
 
             }
 
         }
 
+
+        public static void PushElem(ref Stack<string> tokenStack, ref int step, ref Queue<string> tokenQueue, ref string sign)
+        {
+            Node node1 = new Node();
+            int count = tableOfUpstreamParsing.Count() - 1;
+
+            //tokenStack.Reverse().ToArray();
+
+            for (int i = 0; i < tokenStack.Count(); i++)
+            {
+                string sign1 = CheckSign(tokenStack.ToArray()[i + 1], tokenStack.ToArray()[i]);
+                if (sign1 == "<")
+                {
+                    while ((i + 1) != 0)
+                    {
+                        Terminal elem = new Terminal(tokenStack.ToArray()[i]); //???????????????????????????????/
+                        node1.elements.Add(elem);
+                        i--;
+                    }
+                    break;
+                }
+
+            }
+
+          
+            for (int i = 0; i < node1.elements.Count; i++)
+            {
+                if (TableOfIdentifiers.TokenIsContained(node1.elements[i].Name))
+                {
+                    node1.elements[i].Name = "idn";
+                }
+                if(TableOfConstants.TokenIsContained(node1.elements[i].Name))
+                {
+                    node1.elements[i].Name = "con";
+                }
+            }
+            string replaceElem = null;
+            //нужно заменить основу на нетерминал
+            foreach (KeyValuePair<NonTerminal, List<Node>> KeyValue in Grammar.MyGrammar)
+            {
+                foreach (var node in KeyValue.Value)
+                {
+                    if (node.Equals(node1))
+                    {
+                        replaceElem = KeyValue.Key.Name;
+                        break;
+                    }
+                    if (replaceElem != null)
+                    {
+                        break;
+                    }
+                }
+                if (replaceElem != null)
+                {
+                    break;
+                }
+            }
+
+            int counter = node1.elements.Count;
+            while (counter != 0)
+            {
+                tokenStack.Pop();
+                counter--;
+            }
+            string signBeforePush = CheckSign(tokenStack.Peek(), replaceElem);
+
+            if (signBeforePush == ">")
+            {
+                PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign);
+            }
+            //tokenStack.Pop();
+             tokenStack.Push(replaceElem);
+
+            replaceElem = null;
+
+
+        }
 
         //public static void Loading()
         //{
@@ -280,11 +237,6 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
         public static string CheckSign(string first, string second)
         {
-            foreach(var a  in Grammar.MyGrammar)
-            {
-
-            }
-
             if(TableOfIdentifiers.TokenIsContained(first))
             {
                 first = "idn";
@@ -293,6 +245,15 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             {
                 second = "idn";
             }
+            if(TableOfConstants.TokenIsContained(first))
+            {
+                first = "con";
+            }
+            if(TableOfConstants.TokenIsContained(second))
+            {
+                second = "con";
+            }
+
             //нада добавить проверку на константы
             foreach(KeyValuePair< string, Dictionary<string, string>> KeyValue  in TableOfRelations.tableOfRelation)
             {
@@ -314,3 +275,72 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
     }
 }
+//////идем в обратном порядке и ищем где был знак меньше
+////for (int i = count; i >= 0; i--)
+////{
+////    if (tableOfUpstreamParsing[i].Sign == "<")
+////    {
+////        string[] words = tableOfUpstreamParsing[i].TokenQueue.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+////        for (int j = 0; j < words.Count(); j++)
+////        {
+////            words[j] = words[j].Trim();
+////            if (words[j] != tokenQueue.Peek())
+////            {
+////                basis += words[j] + " ";
+////                string lol = tokenQueue.Peek();
+////            }
+////            else
+////            {
+////                break;
+////            }
+////        }
+////        if (basis != null)
+////        {
+////            break;
+////        }
+////    }
+////}
+
+//basis = basis.Trim();
+//if (TableOfIdentifiers.TokenIsContained(basis))
+//{
+//    basis = "idn";
+//}
+
+
+
+
+//// проверяем, что за знак
+//string sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek());
+
+//Raw raw1 = new Raw()
+//{
+//    Step = step++,
+//    TokenStack = string.Join(", ", tokenStack),
+//    Sign = sign,
+//    TokenQueue = string.Join(", ", tokenQueue)
+//};
+
+//tableOfUpstreamParsing.Add(raw1);
+//// следующая итерация, проверяем на знак, чтобы понять, какой будет дальше стек и очередь
+//if(sign == "<" || sign == "=")
+//{
+//    tokenStack.Push(tokenQueue.Dequeue());
+//}
+//else if(sign == ">")
+//{
+//    int count = tableOfUpstreamParsing.Count() - 1;
+
+//    //идем в обратном порядке и ищем где был знак меньше
+//    for(int i = count; i >=0; i--)
+//    {
+//        if(tableOfUpstreamParsing[i].Sign == "<")
+//        {
+//            string[] words = tableOfUpstreamParsing[i].TokenQueue.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+//            string basis = tableOfUpstreamParsing[i].TokenQueue;
+//        }
+//    }
+//    //тут будет щас логика
+//}

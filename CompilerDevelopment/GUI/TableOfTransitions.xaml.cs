@@ -28,6 +28,13 @@ namespace CompilerDevelopment.GUI
         public TableOfTransitions()
         {
             InitializeComponent();
+            TableOfRelations.LoadFields();
+            TableOfRelations.LoadEquels();
+
+            TableOfRelations.LoadSupportTable();
+            TableOfRelations.LoadLessSign();
+            TableOfRelations.LoadMoreSign();
+            TableOfRelations.TwoNonTernminal();
             //Print();
             MatrixSize = Enumerable.Range(1, 10).ToArray();
             //DataContext = this;

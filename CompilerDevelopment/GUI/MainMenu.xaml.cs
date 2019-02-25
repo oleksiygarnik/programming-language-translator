@@ -29,13 +29,7 @@ namespace CompilerDevelopment.GUI
             MPA.TableOfTransitions.Loading();
 
             Grammar.Loading();
-            TableOfRelations.LoadFields();
-            TableOfRelations.LoadEquels();
-
-            TableOfRelations.LoadSupportTable();
-            TableOfRelations.LoadLessSign();
-            TableOfRelations.LoadMoreSign();
-            TableOfRelations.TwoNonTernminal();
+          
             foreach (var item in TableOfRelations.tableOfRelation)
             {
 

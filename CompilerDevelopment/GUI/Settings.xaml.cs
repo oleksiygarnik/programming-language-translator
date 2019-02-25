@@ -49,7 +49,7 @@ namespace CompilerDevelopment.GUI
             button3.BorderBrush = new SolidColorBrush(Colors.OrangeRed);
             button1.BorderBrush = new SolidColorBrush(Colors.LightBlue);
             button2.BorderBrush = new SolidColorBrush(Colors.LightBlue);
-            SettingMethod = null; //передувань
+            SettingMethod = "UpstreamParsing"; //передувань
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

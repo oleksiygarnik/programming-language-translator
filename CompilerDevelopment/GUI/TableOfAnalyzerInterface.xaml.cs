@@ -1,4 +1,5 @@
 ﻿using CompilerDevelopment.Graphics;
+using CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace CompilerDevelopment.GUI
         public TableOfAnalyzerInterface()
         {
             InitializeComponent();
-            Print();
+            PrintTable();
         }
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -43,6 +44,32 @@ namespace CompilerDevelopment.GUI
                     Stack = n.Value.FullStack,
 
                 }
+            );
+
+            dataGrid.ItemsSource = result;
+        }
+
+        static string ReverseStringBuilder(string str)
+        {
+            string[] words = str.Split(new char[] { ' ' });
+            StringBuilder sb = new StringBuilder(str.Length);
+            for (int i = words.Count(); i-- != 0;)
+                sb.Append(words[i].ToString() + "   ");
+            return sb.ToString();
+        }
+
+
+        private void PrintTable()
+        {
+
+            var result = TableOfUpstreamParsing.tableOfUpstreamParsing.Select(r =>
+            new
+            {
+                Step = r.Step,
+                TokenStack = ReverseStringBuilder(r.TokenStack),
+                Sign = r.Sign,
+                TokenQueue = r.TokenQueue
+            }
             );
 
             dataGrid.ItemsSource = result;
