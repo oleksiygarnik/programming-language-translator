@@ -7,37 +7,214 @@ using System.Threading.Tasks;
 
 namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysis
 {
-    static class TableOfUpstreamParsing
+    public class MiniToken
     {
+        public int Row { get; set; }
+        public string Name { get; set; }
 
-        public static List<Raw> tableOfUpstreamParsing = new List<Raw>();
-
-        public class Raw
+        public MiniToken(int Row, string Name)
         {
-            public int Step { get; set; }
-
-            public string TokenStack { get; set; }
-
-            public string Sign { get; set; }
-
-            public string TokenQueue { get; set; }
-
+            this.Name = Name;
+            this.Row = Row;
         }
+    }
 
-        public static void Loading2()
+    public class Raw
+    {
+        public int Step { get; set; }
+
+        public string TokenStack { get; set; }
+
+        public string Sign { get; set; }
+
+        public List<MiniToken> TokenQueue { get; set; }
+
+        public string Polis { get; set; }
+
+    }
+
+    public class RawForCalculate
+    {
+        public int Step { get; set; }
+
+        public string Stack { get; set; }
+
+        public string Polis { get; set; }
+    }
+
+
+    static class TableOfCalculationExpression
+    {
+        public static List<RawForCalculate> tableOfCalculationExpression = new List<RawForCalculate>();
+
+        public static string CalculationOfExpression()
         {
             int step = 0;
             //закидываем в стек первый элемент
             Stack<string> tokenStack = new Stack<string>();
 
             Queue<string> tokenQueue = new Queue<string>();
+            var list = TableOfUpstreamParsing.tableOfUpstreamParsing.Last().Polis.ToList();
+
+            for (int i = 0; i < list.Count(); i++)
+            {
+                tokenQueue.Enqueue(list[i].ToString());
+                //tokenQueue.Enqueue(SourceTableOfTokens.SourceListOfTokens[i].View);
+            }
+            RawForCalculate raw = new RawForCalculate()
+            {
+                Step = step++,
+                Stack = string.Join(" ", tokenStack),
+                Polis = string.Join(" ", tokenQueue)
+            };
+
+            tableOfCalculationExpression.Add(raw);
+            //NEXT ALGO for solution
+
+            while (tokenQueue.Count != 0)
+            {
+
+                
+
+                string firstQueueElem = tokenQueue.Peek();
+                if(TableOfConstants.TokenIsContained(firstQueueElem))
+                {
+                    tokenStack.Push(tokenQueue.Dequeue());
+                }
+                else if (TableOfIdentifiers.TokenIsContained(firstQueueElem))
+                {
+                    tokenStack.Push(tokenQueue.Dequeue());
+                }
+                else if(firstQueueElem=="@")
+                {
+                    //if(TableOfConstants.TokenIsContained(tokenStack.Peek()) || TableOfIdentifiers.TokenIsContained(tokenStack.Peek()))
+                    //{
+
+                    //}
+                    string tmp = tokenStack.Pop();
+                    tokenStack.Push("-" + tmp);
+                    tokenQueue.Dequeue();
+                }
+                else
+                {
+                    string tmp1 = tokenStack.Pop();
+                    string tmp2 = tokenStack.Pop();
+                    tokenStack.Push(tmp2 + firstQueueElem + tmp1);
+                    tokenQueue.Dequeue();
+                }
+
+                RawForCalculate raw1 = new RawForCalculate()
+                {
+                    Step = step++,
+                    Stack = string.Join(" ", tokenStack),
+                    Polis = string.Join(" ", tokenQueue)
+                };
+
+                tableOfCalculationExpression.Add(raw1);
+
+            }
+            return null;
+        }
+    }
+
+    static class TableOfUpstreamParsing
+    {
+
+        public static List<Raw> tableOfUpstreamParsing = new List<Raw>();
+
+     
+     
+
+        //public static string Loading2()
+        //{
+        //    int step = 0;
+        //    //закидываем в стек первый элемент
+        //    Stack<string> tokenStack = new Stack<string>();
+
+        //    Queue<MiniToken> tokenQueue = new Queue<MiniToken>();
+
+        //    for (int i = 0; i < SourceTableOfTokens.SourceListOfTokens.Count; i++)
+        //    {
+        //        MiniToken miniToken = new MiniToken(SourceTableOfTokens.SourceListOfTokens[i].Row, SourceTableOfTokens.SourceListOfTokens[i].View);
+        //        tokenQueue.Enqueue(miniToken);
+        //        //tokenQueue.Enqueue(SourceTableOfTokens.SourceListOfTokens[i].View);
+        //    }
+        //    MiniToken miniTokenLast = new MiniToken(0, "#");
+        //    tokenQueue.Enqueue(miniTokenLast);
+        //    //tokenQueue.Enqueue("#");
+
+        //    tokenStack.Push("#");
+
+
+        //    //NEXT
+        //    string sign;
+        //    string basis = null;
+        //    while (tokenQueue.Count != 0)
+        //    {
+
+        //         sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek().Name);
+
+        //        if (sign == null)
+        //        {
+        //            int row = tokenQueue.Peek().Row + 1;
+        //            return "Найдена ошибка в " + tokenQueue.Peek().Row + "-" + row + "рядке!";
+        //        }
+
+        //        Raw raw = new Raw()
+        //        {
+        //            Step = step++, 
+        //            TokenStack = string.Join(" ", tokenStack),
+        //            Sign = sign,
+        //            TokenQueue = tokenQueue.ToList()
+        //        };
+
+        //        tableOfUpstreamParsing.Add(raw);
+
+        //        if (sign == "<" || sign == "=")
+        //        {
+        //            tokenStack.Push(tokenQueue.Dequeue().Name);
+        //        }
+        //        else if (sign == ">")
+        //        {
+        //            PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign);
+        //        }
+
+        //        if (tokenStack.Contains("programm"))
+        //        {
+        //            Raw raw1 = new Raw()
+        //            {
+        //                Step = step++,
+        //                TokenStack = string.Join(" ", tokenStack),
+        //                Sign = sign,
+        //                TokenQueue = tokenQueue.ToList()
+        //            };
+        //            tableOfUpstreamParsing.Add(raw1);
+        //            return "Успешно пройден синтаксический анализатор";
+        //            break;
+        //        }
+
+        //    }
+        //    return null;
+
+        //}
+
+        public static string LoadingForLab6()
+        {
+            int step = 0;
+            //закидываем в стек первый элемент
+            Stack<string> tokenStack = new Stack<string>();
+
+            Queue<MiniToken> tokenQueue = new Queue<MiniToken>();
 
             for (int i = 0; i < SourceTableOfTokens.SourceListOfTokens.Count; i++)
             {
-                tokenQueue.Enqueue(SourceTableOfTokens.SourceListOfTokens[i].View);
+                MiniToken miniToken = new MiniToken(SourceTableOfTokens.SourceListOfTokens[i].Row, SourceTableOfTokens.SourceListOfTokens[i].View);
+                tokenQueue.Enqueue(miniToken);
+                //tokenQueue.Enqueue(SourceTableOfTokens.SourceListOfTokens[i].View);
             }
-
-            tokenQueue.Enqueue("#");
+            MiniToken miniTokenLast = new MiniToken(0, "#");
+            tokenQueue.Enqueue(miniTokenLast);
+            //tokenQueue.Enqueue("#");
 
             tokenStack.Push("#");
 
@@ -45,55 +222,61 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             //NEXT
             string sign;
             string basis = null;
+            string polis = null;
             while (tokenQueue.Count != 0)
             {
 
-                 sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek());
+                sign = CheckSign(tokenStack.Peek(), tokenQueue.Peek().Name);
+
                 if (sign == null)
                 {
-                    throw new Exception("LOH");
+                    int row = tokenQueue.Peek().Row + 1;
+                    return "Найдена ошибка в " + tokenQueue.Peek().Row + "-" + row + "рядке!";
                 }
 
                 Raw raw = new Raw()
                 {
-                    Step = step++, 
+                    Step = step++,
                     TokenStack = string.Join(" ", tokenStack),
                     Sign = sign,
-                    TokenQueue = string.Join("   ", tokenQueue)
+                    TokenQueue = tokenQueue.ToList(),
+                    Polis = polis
                 };
-
-                //string lol = string.Join(" ", tokenStack);
 
                 tableOfUpstreamParsing.Add(raw);
 
                 if (sign == "<" || sign == "=")
                 {
-                    tokenStack.Push(tokenQueue.Dequeue());
+                    tokenStack.Push(tokenQueue.Dequeue().Name);
                 }
                 else if (sign == ">")
                 {
-                    PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign);
+                    PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign, ref polis);
                 }
 
-                if(tokenStack.Contains("programm"))
+                // if (tokenStack.Contains("programm"))
+
+                if (tokenStack.Contains("E1") && tokenStack.Count == 2)
                 {
                     Raw raw1 = new Raw()
                     {
                         Step = step++,
                         TokenStack = string.Join(" ", tokenStack),
                         Sign = sign,
-                        TokenQueue = string.Join(" ", tokenQueue)
+                        TokenQueue = tokenQueue.ToList(), 
+                        Polis = polis
                     };
                     tableOfUpstreamParsing.Add(raw1);
+                    return "Успешно пройден синтаксический анализатор";
                     break;
                 }
 
             }
+            return null;
 
         }
 
-
-        public static void PushElem(ref Stack<string> tokenStack, ref int step, ref Queue<string> tokenQueue, ref string sign)
+        public static void PushElem(ref Stack<string> tokenStack, ref int step, ref Queue<MiniToken> tokenQueue, ref string sign, ref string polis)
         {
             Node node1 = new Node();
             int count = tableOfUpstreamParsing.Count() - 1;
@@ -116,15 +299,17 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
             }
 
-          
+            string tmp_name = null;
             for (int i = 0; i < node1.elements.Count; i++)
             {
                 if (TableOfIdentifiers.TokenIsContained(node1.elements[i].Name))
                 {
+                    tmp_name = node1.elements[i].Name;
                     node1.elements[i].Name = "idn";
                 }
                 if(TableOfConstants.TokenIsContained(node1.elements[i].Name))
                 {
+                    tmp_name = node1.elements[i].Name;
                     node1.elements[i].Name = "con";
                 }
             }
@@ -136,6 +321,14 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
                 {
                     if (node.Equals(node1))
                     {
+                        if(node1.elements[0].Name == "idn" || node1.elements[0].Name == "con")
+                        {
+                            polis += tmp_name;
+                        }
+                        else if(node.SemanticSubProgramm!=null || node.SemanticSubProgramm!="")
+                        {
+                            polis += node.SemanticSubProgramm;
+                        }
                         replaceElem = KeyValue.Key.Name;
                         break;
                     }
@@ -160,7 +353,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
             if (signBeforePush == ">")
             {
-                PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign);
+                PushElem(ref tokenStack, ref step, ref tokenQueue, ref sign, ref polis);
             }
             //tokenStack.Pop();
              tokenStack.Push(replaceElem);
@@ -271,6 +464,9 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             return null;
         }
 
+
+
+      
 
 
     }

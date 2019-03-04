@@ -1,4 +1,5 @@
 ﻿using CompilerDevelopment.Graphics;
+using CompilerDevelopment.Upstream_analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,13 @@ namespace CompilerDevelopment.GUI
         public Settings()
         {
             InitializeComponent();
+            TableOfRelations.LoadFields();
+            TableOfRelations.LoadEquels();
+
+            TableOfRelations.LoadSupportTable();
+            TableOfRelations.LoadLessSign();
+            TableOfRelations.LoadMoreSign();
+            TableOfRelations.TwoNonTernminal();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -113,7 +113,12 @@ namespace CompilerDevelopment.Entities
                     {
                         continue;
                     }
-                    else if (TableOfIdentifiers.TokenIsContained(SourceTableOfTokens.SourceListOfTokens[i].View))
+                
+                    else if (SourceTableOfTokens.SourceListOfTokens[i].View == ":")
+                {
+                    continue;
+                }
+                else if (TableOfIdentifiers.TokenIsContained(SourceTableOfTokens.SourceListOfTokens[i].View))
                     {
                         continue;
                     }

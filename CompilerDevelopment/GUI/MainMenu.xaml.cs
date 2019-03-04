@@ -28,8 +28,11 @@ namespace CompilerDevelopment.GUI
             InitializeComponent();
             MPA.TableOfTransitions.Loading();
 
-            Grammar.Loading();
-          
+            //Grammar.Loading();
+
+            Grammar.LoadingFor6Lab();
+
+           
             foreach (var item in TableOfRelations.tableOfRelation)
             {
 

@@ -111,8 +111,8 @@ namespace CompilerDevelopment.Entities
                 if (!TableOfIdentifiers.TokenIsContained(token))
                 {
                     string type = null;
-                    if (SemanticDataValidation.IsUseDeclarationIdentifier(token, row))
-                    {
+                    //if (SemanticDataValidation.IsUseDeclarationIdentifier(token, row))
+                    //{
                         //type = SemanticDataValidation.Type;
                         //произвести поиск по таблице SourceTableOfTokens в обратном порядке до тех пор пока не найдет тип
                         for (int i = SourceListOfTokens.Count - 1; i >= 0; i--)
@@ -123,14 +123,14 @@ namespace CompilerDevelopment.Entities
                                 break;
                             }
                         }
-                    }
+                  //  }
                     TableOfIdentifiers.AddTokenToIdentifierTable(token, type);
                 }
-                else
-                {
-                    SemanticDataValidation.IsRepeatDeclarationIdentifier(token, row);
+                //else
+               // {
+                //    SemanticDataValidation.IsRepeatDeclarationIdentifier(token, row);
 
-                }
+               // }
                 //SemanticDataValidation.WriteType(token);
             }
             for (int i = 0; i < TableOfIdentifiers.IdentifierListOfTokens.Count; i++)

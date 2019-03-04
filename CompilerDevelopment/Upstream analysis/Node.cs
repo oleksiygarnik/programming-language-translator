@@ -9,6 +9,7 @@ namespace CompilerDevelopment.Upstream_analysis
     class Node
     {
         public List<Element> elements = new List<Element>();
+        public string SemanticSubProgramm { get; set; }
 
         public Node() { }
 
@@ -28,13 +29,14 @@ namespace CompilerDevelopment.Upstream_analysis
                     {
                         if(node.elements[i].Name == this.elements[i].Name)
                         {
-                            return true;
+                            continue;
                         }
                         else
                         {
                             return false;
                         }
                     }
+                    return true;
                 }
                 else
                 {

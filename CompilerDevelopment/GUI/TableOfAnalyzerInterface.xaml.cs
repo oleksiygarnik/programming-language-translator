@@ -25,7 +25,7 @@ namespace CompilerDevelopment.GUI
         public TableOfAnalyzerInterface()
         {
             InitializeComponent();
-            PrintTable();
+            PrintTableCalculate();
         }
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -58,21 +58,56 @@ namespace CompilerDevelopment.GUI
             return sb.ToString();
         }
 
+        static string BuildQueue(List<MiniToken> tokenQueue)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < tokenQueue.Count(); i++)
+            {
+                sb.Append(tokenQueue[i].Name + " ");
+            }
+            return sb.ToString();
+        }
 
         private void PrintTable()
         {
-
             var result = TableOfUpstreamParsing.tableOfUpstreamParsing.Select(r =>
             new
             {
                 Step = r.Step,
                 TokenStack = ReverseStringBuilder(r.TokenStack),
                 Sign = r.Sign,
-                TokenQueue = r.TokenQueue
+                TokenQueue = BuildQueue(r.TokenQueue), 
+                Polis = r.Polis
             }
             );
 
             dataGrid.ItemsSource = result;
+        }
+
+        private void PrintTableCalculate()
+        {
+            var result = TableOfCalculationExpression.tableOfCalculationExpression.Select(r =>
+            new
+            {
+                Step = r.Step,
+                TokenStack = MakeStack(r.Stack),
+                Polis = r.Polis
+            }
+            );
+
+            dataGrid.ItemsSource = result;
+        }
+
+        static string MakeStack(string stack)
+        {
+            string[] words = stack.Split(new char[] { ' ' });
+            StringBuilder sb = new StringBuilder(stack.Length);
+            sb.Append("| ");
+            for (int i = words.Count(); i-- != 0;)
+            {
+                sb.Append(words[i] + " | ");
+            }
+            return sb.ToString();
         }
     }
 }

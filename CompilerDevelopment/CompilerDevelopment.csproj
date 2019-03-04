@@ -199,6 +199,8 @@
   <ItemGroup>
     <Resource Include="MPA\TableOfTransitions.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Lab6\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

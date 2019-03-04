@@ -38,6 +38,7 @@ namespace CompilerDevelopment.Upstream_analysis
                                 Element elemTmp;
                                 if (n.FirstAttribute.Value == "Terminal")
                                 {
+                                    
                                     elemTmp = new Terminal(n.Value);
                                 }
                                 else
@@ -47,6 +48,56 @@ namespace CompilerDevelopment.Upstream_analysis
                                 elementsTmp.Add(elemTmp);
                             }
                             nodeTmp = new Node(elementsTmp);
+                            nodeTmp.SemanticSubProgramm = node?.Attribute("info").Value;
+                            nodesTmp.Add(nodeTmp);
+                        }
+                    }
+                }
+                MyGrammar[ntKey] = nodesTmp;
+                //nodesTmp.Clear();
+            }
+
+
+        }
+
+        public static void LoadingFor6Lab()
+        {
+            XDocument xDocument = XDocument.Load("TableOfRelationLab6.xml");
+            XElement root = xDocument.Element("grammar");
+            NonTerminal ntKey = null;
+            List<Node> nodesTmp = null;
+            List<Element> elementsTmp = null;
+            Node nodeTmp = null;
+            foreach (var link in root.Elements())
+            {
+                foreach (var side in link.Elements())
+                {
+                    if (side.Name == "left")
+                    {
+                        ntKey = new NonTerminal(side.Value);
+                    }
+                    else
+                    {
+                        nodesTmp = new List<Node>();
+                        foreach (var node in side.Elements())
+                        {
+                            elementsTmp = new List<Element>();
+                            foreach (var n in node.Elements())
+                            {
+                                Element elemTmp;
+                                if (n.FirstAttribute.Value == "Terminal")
+                                {
+
+                                    elemTmp = new Terminal(n.Value);
+                                }
+                                else
+                                {
+                                    elemTmp = new NonTerminal(n.Value);
+                                }
+                                elementsTmp.Add(elemTmp);
+                            }
+                            nodeTmp = new Node(elementsTmp);
+                            nodeTmp.SemanticSubProgramm = node?.Attribute("info").Value;
                             nodesTmp.Add(nodeTmp);
                         }
                     }

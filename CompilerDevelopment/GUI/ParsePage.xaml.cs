@@ -132,9 +132,12 @@ namespace CompilerDevelopment.GUI
 
                         case "UpstreamParsing":
                             TableOfUpstreamParsing.tableOfUpstreamParsing.Clear();
-                            
 
-                            TableOfUpstreamParsing.Loading2();
+
+                            //ListError.Text += "\n" + TableOfUpstreamParsing.Loading2();
+                            ListError.Text += "\n" + TableOfUpstreamParsing.LoadingForLab6();
+                            TableOfCalculationExpression.CalculationOfExpression();
+
                             break;
 
                     }
