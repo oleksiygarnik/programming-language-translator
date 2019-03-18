@@ -1,4 +1,5 @@
-﻿using CompilerDevelopment.Entities;
+﻿using CompilerDevelopment.DijkstraAlgorithmLab7;
+using CompilerDevelopment.Entities;
 using CompilerDevelopment.Graphics;
 using CompilerDevelopment.RecursiveDescent;
 using CompilerDevelopment.Upstream_analysis;
@@ -81,8 +82,8 @@ namespace CompilerDevelopment.GUI
         private void Compiler_Click(object sender, RoutedEventArgs e)
         {
             ListError.Text = "";
-            MPA.TableOfAnalyzer.fullStack.Clear();
-            MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
+            PolisTableByDijkstra.TableOfAnalyzer.fullStack.Clear();
+            PolisTableByDijkstra.TableOfAnalyzer.tableOfAnalysis.Clear();
             SourceTableOfTokens.SourceListOfTokens.Clear();
             TableOfConstants.ConstantListOfTokens.Clear();
             TableOfIdentifiers.IdentifierListOfTokens.Clear();
@@ -122,21 +123,23 @@ namespace CompilerDevelopment.GUI
                             }
                             break;
                         case "MPA":
+                            PolisTableByDijkstraAlgo.LoadingOperationsTable();
+                            PolisTableByDijkstraAlgo.LoadingPolisTableByDijkstraAlgorithm();
                             
-
-                            MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
-                            string error = MPA.TableOfAnalyzer.PushInTable(9);
-                            ListError.Text += "\n";
-                            ListError.Text += error;
+                            //MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
+                            //string error = MPA.TableOfAnalyzer.PushInTable(9);
+                            //ListError.Text += "\n";
+                            //ListError.Text += error;
                             break;
 
                         case "UpstreamParsing":
                             TableOfUpstreamParsing.tableOfUpstreamParsing.Clear();
-
+                            TableOfCalculationExpression.tableOfCalculationExpression.Clear();
 
                             //ListError.Text += "\n" + TableOfUpstreamParsing.Loading2();
                             ListError.Text += "\n" + TableOfUpstreamParsing.LoadingForLab6();
-                            TableOfCalculationExpression.CalculationOfExpression();
+                            Storage.Expression = TextCode.Text;
+                            //ListError.Text += "\n Result: " + TableOfCalculationExpression.CalculationOfExpression();
 
                             break;
 

@@ -9,5 +9,9 @@ namespace CompilerDevelopment.GUI
     static class Storage
     {
         public static string StringTemplate { get; set; }
+
+        public static Dictionary<string, string> valueForIdentifiers { get; set; } = new Dictionary<string, string>();
+
+        public static string Expression { get; set; }
     }
 }

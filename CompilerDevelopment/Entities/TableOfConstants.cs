@@ -38,10 +38,11 @@ namespace CompilerDevelopment.Entities
             string type;
             if (!TokenIsContained(token))
             {
-                if (SemanticDataValidation.CheckCast(token, out type, row))
-                {
-                    AddTokenToTableOfConstant(token, type);
-                }
+                //if (SemanticDataValidation.CheckCast(token, out type, row))
+                //{
+                //    AddTokenToTableOfConstant(token, type);
+                //}
+                AddTokenToTableOfConstant(token, null);
             }
 
             //    if (SourceTableOfTokens.SourceListOfTokens.Count > 1)

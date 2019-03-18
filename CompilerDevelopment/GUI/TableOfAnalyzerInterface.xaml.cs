@@ -1,4 +1,5 @@
-﻿using CompilerDevelopment.Graphics;
+﻿using CompilerDevelopment.DijkstraAlgorithmLab7;
+using CompilerDevelopment.Graphics;
 using CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysis;
 using System;
 using System.Collections.Generic;
@@ -25,16 +26,37 @@ namespace CompilerDevelopment.GUI
         public TableOfAnalyzerInterface()
         {
             InitializeComponent();
-            PrintTableCalculate();
+            //PrintTableCalculate();
+            //PrintTable();
+            PrintTableLab7();
         }
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
         {
             Switcher.Switch(new MainMenu());
         }
 
+        private void PrintTableLab7()
+        {
+            var result = PolisTableByDijkstraAlgo.polisTableByDijkstraAlgo.Select(
+                r =>
+                new
+                {
+                    Step = r.Step,
+                    TokenStack = r.Stack,
+                    InputString = r.InputToken,
+                    Polis = MakePolisToString(r.Polis),
+                    CycleIndication = r.CycleIndication,
+                    CycleParametrVariable = r.CycleParameterVariable                  
+                }
+            );
+
+            dataGrid.ItemsSource = result;
+        }
+
+
         private void Print()
         {
-            var result = MPA.TableOfAnalyzer.tableOfAnalysis.Select(
+            var result = PolisTableByDijkstra.TableOfAnalyzer.tableOfAnalysis.Select(
                 (n, i) =>
                 new
                 {
@@ -76,38 +98,36 @@ namespace CompilerDevelopment.GUI
                 Step = r.Step,
                 TokenStack = ReverseStringBuilder(r.TokenStack),
                 Sign = r.Sign,
-                TokenQueue = BuildQueue(r.TokenQueue), 
-                Polis = r.Polis
+                TokenQueue = BuildQueue(r.TokenQueue),
+                Polis = MakePolisToString(r.Polis)
             }
             );
 
             dataGrid.ItemsSource = result;
         }
 
-        private void PrintTableCalculate()
-        {
-            var result = TableOfCalculationExpression.tableOfCalculationExpression.Select(r =>
-            new
-            {
-                Step = r.Step,
-                TokenStack = MakeStack(r.Stack),
-                Polis = r.Polis
-            }
-            );
+       
 
-            dataGrid.ItemsSource = result;
-        }
-
-        static string MakeStack(string stack)
+        static string MakePolisToString(List<string> polis)
         {
-            string[] words = stack.Split(new char[] { ' ' });
-            StringBuilder sb = new StringBuilder(stack.Length);
-            sb.Append("| ");
-            for (int i = words.Count(); i-- != 0;)
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < polis.Count; i++)
             {
-                sb.Append(words[i] + " | ");
+                sb.Append(polis[i] + " ");
             }
             return sb.ToString();
+        }
+
+        private void CalculateExpression_Click(object sender, RoutedEventArgs e)
+        {
+            UserControl page = new CalculateInterface();
+            Switcher.Switch(page);
+        }
+
+        private void CalculateTable_Click(object sender, RoutedEventArgs e)
+        {
+            UserControl page = new CalculateTableInterface();
+            Switcher.Switch(page);
         }
     }
 }

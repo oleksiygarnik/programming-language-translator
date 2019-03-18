@@ -1,4 +1,5 @@
 ﻿using CompilerDevelopment.Entities;
+using CompilerDevelopment.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
         public List<MiniToken> TokenQueue { get; set; }
 
-        public string Polis { get; set; }
+        public List<string> Polis { get; set; }
 
     }
 
@@ -54,7 +55,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             Stack<string> tokenStack = new Stack<string>();
 
             Queue<string> tokenQueue = new Queue<string>();
-            var list = TableOfUpstreamParsing.tableOfUpstreamParsing.Last().Polis.ToList();
+            var list = TableOfUpstreamParsing.tableOfUpstreamParsing.Last().Polis;
 
             for (int i = 0; i < list.Count(); i++)
             {
@@ -71,18 +72,31 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             tableOfCalculationExpression.Add(raw);
             //NEXT ALGO for solution
 
+            double result = 0;
+            List<double> listOfNumbers = new List<double>();
             while (tokenQueue.Count != 0)
             {
 
-                
-
+ 
                 string firstQueueElem = tokenQueue.Peek();
                 if(TableOfConstants.TokenIsContained(firstQueueElem))
                 {
                     tokenStack.Push(tokenQueue.Dequeue());
+                    listOfNumbers.Add(Double.Parse(firstQueueElem));
                 }
                 else if (TableOfIdentifiers.TokenIsContained(firstQueueElem))
                 {
+                    foreach (KeyValuePair<string, string> KeyValue in Storage.valueForIdentifiers)
+                    {
+                        if(KeyValue.Key == firstQueueElem)
+                        {
+                            if (KeyValue.Value == null || KeyValue.Value == string.Empty)
+                            {
+                                return "Please, enter value";
+                            }
+                            listOfNumbers.Add(Double.Parse(KeyValue.Value));
+                        }
+                    }
                     tokenStack.Push(tokenQueue.Dequeue());
                 }
                 else if(firstQueueElem=="@")
@@ -91,16 +105,52 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
                     //{
 
                     //}
+                    double lastElem = listOfNumbers.Last() - 2 * listOfNumbers.Last();
+                    listOfNumbers[listOfNumbers.Count - 1] = lastElem;
+                
                     string tmp = tokenStack.Pop();
-                    tokenStack.Push("-" + tmp);
+                    tokenStack.Push("(-" + tmp + ")");
                     tokenQueue.Dequeue();
                 }
                 else
                 {
                     string tmp1 = tokenStack.Pop();
                     string tmp2 = tokenStack.Pop();
-                    tokenStack.Push(tmp2 + firstQueueElem + tmp1);
+                    tokenStack.Push("(" + tmp2 + firstQueueElem + tmp1 + ")");
                     tokenQueue.Dequeue();
+                }
+
+                switch (firstQueueElem)
+                {
+                    case "-":
+                        listOfNumbers[listOfNumbers.Count - 2] = listOfNumbers[listOfNumbers.Count - 2] - listOfNumbers[listOfNumbers.Count - 1];
+                        listOfNumbers.RemoveAt(listOfNumbers.Count - 1);
+                        break;
+                    case "+":
+                        listOfNumbers[listOfNumbers.Count - 2] = listOfNumbers[listOfNumbers.Count - 2] + listOfNumbers[listOfNumbers.Count - 1];
+                        listOfNumbers.RemoveAt(listOfNumbers.Count - 1);
+                        break;
+                    case "*":
+                        listOfNumbers[listOfNumbers.Count - 2] = listOfNumbers[listOfNumbers.Count - 2] * listOfNumbers[listOfNumbers.Count - 1];
+                        listOfNumbers.RemoveAt(listOfNumbers.Count - 1);
+                        break;
+                    case "/":
+                        if(listOfNumbers[listOfNumbers.Count-1]== 0)
+                        {
+                            return "Ошибка, деление на 0";
+                        }
+                        listOfNumbers[listOfNumbers.Count - 2] = listOfNumbers[listOfNumbers.Count - 2] / listOfNumbers[listOfNumbers.Count - 1];
+                        listOfNumbers.RemoveAt(listOfNumbers.Count - 1);
+                        break;
+                }
+
+                //else if(firstQueueElem == "-")
+                //{
+                //    listOfNumbers[listOfNumbers.Count - 1] = listOfNumbers[listOfNumbers.Count - 2] - listOfNumbers[listOfNumbers.Count - 1];
+                //}
+                if (listOfNumbers.Count > 0)
+                {
+                    result = listOfNumbers.First();
                 }
 
                 RawForCalculate raw1 = new RawForCalculate()
@@ -113,7 +163,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
                 tableOfCalculationExpression.Add(raw1);
 
             }
-            return null;
+            return result.ToString();
         }
     }
 
@@ -222,7 +272,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
             //NEXT
             string sign;
             string basis = null;
-            string polis = null;
+            List<string> polis = new List<string>();
             while (tokenQueue.Count != 0)
             {
 
@@ -233,17 +283,23 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
                     int row = tokenQueue.Peek().Row + 1;
                     return "Найдена ошибка в " + tokenQueue.Peek().Row + "-" + row + "рядке!";
                 }
-
+                List<string> polisTmp = new List<string>(polis);
+                //for(int i = 0; i < polis.Count; i++)
+                //{
+                //    polisTmp[i] = polis[i];
+                //}
                 Raw raw = new Raw()
                 {
                     Step = step++,
                     TokenStack = string.Join(" ", tokenStack),
                     Sign = sign,
                     TokenQueue = tokenQueue.ToList(),
-                    Polis = polis
+                    Polis = polisTmp
                 };
-
+              
                 tableOfUpstreamParsing.Add(raw);
+
+                //polis = new List<string>();
 
                 if (sign == "<" || sign == "=")
                 {
@@ -258,6 +314,11 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
                 if (tokenStack.Contains("E1") && tokenStack.Count == 2)
                 {
+                    if(tokenQueue.Count>1)
+                    {
+                        int row1 = tokenQueue.Peek().Row + 1;
+                        return "Найдена ошибка в " + tokenQueue.Peek().Row + "-" + row1 + "рядке!";
+                    }
                     Raw raw1 = new Raw()
                     {
                         Step = step++,
@@ -276,7 +337,7 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
 
         }
 
-        public static void PushElem(ref Stack<string> tokenStack, ref int step, ref Queue<MiniToken> tokenQueue, ref string sign, ref string polis)
+        public static void PushElem(ref Stack<string> tokenStack, ref int step, ref Queue<MiniToken> tokenQueue, ref string sign, ref List<string> polis)
         {
             Node node1 = new Node();
             int count = tableOfUpstreamParsing.Count() - 1;
@@ -323,11 +384,11 @@ namespace CompilerDevelopment.Upstream_analysis.SyntaxAnalyzerForUpstreamAnalysi
                     {
                         if(node1.elements[0].Name == "idn" || node1.elements[0].Name == "con")
                         {
-                            polis += tmp_name;
+                            polis.Add(tmp_name);
                         }
-                        else if(node.SemanticSubProgramm!=null || node.SemanticSubProgramm!="")
+                        else if(node.SemanticSubProgramm!="none")
                         {
-                            polis += node.SemanticSubProgramm;
+                            polis.Add(node.SemanticSubProgramm);
                         }
                         replaceElem = KeyValue.Key.Name;
                         break;

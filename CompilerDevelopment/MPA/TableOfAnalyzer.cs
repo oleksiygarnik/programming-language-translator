@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompilerDevelopment.MPA
+namespace CompilerDevelopment.PolisTableByDijkstra
 {
     static class TableOfAnalyzer
     {

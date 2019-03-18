@@ -26,8 +26,18 @@ namespace CompilerDevelopment.GUI
         public MainMenu()
         {
             InitializeComponent();
-            MPA.TableOfTransitions.Loading();
+            PolisTableByDijkstra.TableOfTransitions.Loading();
 
+
+            //Start Test 7 lab
+
+          
+
+
+
+
+
+            ///////////////////////////////////////End Lab7
             //Grammar.Loading();
 
             Grammar.LoadingFor6Lab();

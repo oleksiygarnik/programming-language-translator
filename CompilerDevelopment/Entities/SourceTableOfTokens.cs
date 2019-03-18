@@ -25,7 +25,7 @@ namespace CompilerDevelopment.Entities
             bool IsContainedInTokensTable = false;
             foreach (KeyValuePair<int, string> KeyValue in TableOfTokens.Tokens)
             {
-                SemanticDataValidation.WriteType(token);
+                //SemanticDataValidation.WriteType(token);
                 if (token == KeyValue.Value)
                 {
                     AddTokenToSourceTable(token, KeyValue.Key, codeIDN: 0, codeCON: 0, row: row);

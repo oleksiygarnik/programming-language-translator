@@ -34,7 +34,7 @@ namespace CompilerDevelopment.GUI
 
         private void Print()
         {
-            var result = MPA.TableOfAnalyzer.tableOfAnalysis.Select(
+            var result = PolisTableByDijkstra.TableOfAnalyzer.tableOfAnalysis.Select(
                 (n, i) =>
                 new
                 {

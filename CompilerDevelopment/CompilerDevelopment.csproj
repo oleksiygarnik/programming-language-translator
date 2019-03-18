@@ -55,6 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DijkstraAlgorithmLab7\PolisTableByDijkstraAlgo.cs" />
+    <Compile Include="DijkstraAlgorithmLab7\TableForExecutePolis.cs" />
+    <Compile Include="DijkstraAlgorithmLab7\TableOfLabels.cs" />
+    <Compile Include="GUI\CalculateInterface.xaml.cs">
+      <DependentUpon>CalculateInterface.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CalculateTableInterface.xaml.cs">
+      <DependentUpon>CalculateTableInterface.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
@@ -98,6 +107,14 @@
     <Compile Include="Upstream analysis\TableOfRelations.cs" />
     <Compile Include="Upstream analysis\Terminal.cs" />
     <Page Include="Graphics\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CalculateInterface.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CalculateTableInterface.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
