@@ -1,13 +1,14 @@
 ﻿using CompilerDevelopment.Entities;
+using CompilerDevelopment.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CompilerDevelopment.PolisTableByDijkstra
+namespace CompilerDevelopment.MPA
 {
-    static class TableOfAnalyzer
+    public static class TableOfAnalyzer
     {
         public class Row
         {
@@ -73,7 +74,18 @@ namespace CompilerDevelopment.PolisTableByDijkstra
                             {
                                 tableOfAnalysis.Add(count + 1, row);
                                 found = false; // программа завершена
-                                return "Программа успешно прошла синтаксический анализ";
+                                if (SourceTableOfTokens.SourceListOfTokens.Count - 1 == i)
+                                {
+                                    Storage.SyntaxAnalyzer = true;
+                                    Storage.End = false;
+                                    return "Программа успешно прошла синтаксический анализ";
+                                }
+                                else
+                                {
+                                    Storage.SyntaxAnalyzer = false;
+                                    Storage.End = true;
+                                    return "Обнаружено ранее окончание кода!";
+                                }
                             }
 
                         }
@@ -100,7 +112,20 @@ namespace CompilerDevelopment.PolisTableByDijkstra
                         {
                             //Console.WriteLine(state.Error);
                             found = false;
-                            return state.Error;
+                            if (SourceTableOfTokens.SourceListOfTokens.Count > i)
+                            {
+                                //Storage.ListOfErrors.Add(state.Error + "\nОшибка в рядке " + SourceTableOfTokens.SourceListOfTokens[i].Row);
+                                Storage.SyntaxAnalyzer = false;
+                                Storage.End = true;
+                                return (state.Error + "\nОшибка в рядке " + SourceTableOfTokens.SourceListOfTokens[i].Row);
+                            }
+                            else
+                            {
+                                //Storage.ListOfErrors.Add(state.Error);
+                                Storage.SyntaxAnalyzer = false;
+                                Storage.End = true;
+                                return (state.Error);
+                            }
                         }
                         else if (state.Info.Contains("[!=] - Exit"))
                         {
@@ -128,11 +153,18 @@ namespace CompilerDevelopment.PolisTableByDijkstra
                 else
                 {
                     found = false;
+                    //Storage.ListOfErrors.Add("Key is not found");
+                    Storage.SyntaxAnalyzer = false;
+                    Storage.End = true;
                     return "Key is not found.";
                 }
 
             }
-            return state.Error;
+            //Storage.ListOfErrors.Add(state.Error + "\nОшибка в рядке " + SourceTableOfTokens.SourceListOfTokens[i].Row);
+
+            Storage.SyntaxAnalyzer = false;
+            Storage.End = true;
+            return (state.Error + "\nОшибка в рядке " + SourceTableOfTokens.SourceListOfTokens[i].Row);
         }
 
         public static void ViewTableOfAnalysis()

@@ -70,6 +70,9 @@
     <Compile Include="GUI\ParsePage.xaml.cs">
       <DependentUpon>ParsePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ProgrammResult.xaml.cs">
+      <DependentUpon>ProgrammResult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\ParsePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ProgrammResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

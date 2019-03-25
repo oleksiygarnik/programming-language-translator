@@ -51,7 +51,7 @@
                 </ListView>
 
 
-
+                <DataGrid Name="dataGrid" Grid.Row="1"></DataGrid>
 
                 <Grid Background="#B5CBEF" Grid.Row="2" Grid.ColumnSpan="3">
                     <Button Grid.Row="2" Width="40" Margin="5"  HorizontalAlignment="Center" Click="BackToMainMenu_Click">Back</Button>

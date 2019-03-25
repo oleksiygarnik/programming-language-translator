@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace CompilerDevelopment.Entities
             int number = ConstantListOfTokens.Count;
             Token tok = new Token(View: token, Code: 101, Row: 0, CodeIDN: 0, CodeCON: 0, NumberInTable: ++number, Type: type);
             ConstantListOfTokens.Add(tok);
+            //int a = (int)float.Parse(token, CultureInfo.InvariantCulture);
         }
 
         public static bool TokenIsContained(string token)

@@ -1,4 +1,5 @@
-﻿using CompilerDevelopment.Graphics;
+﻿using CompilerDevelopment.DijkstraAlgorithmLab7;
+using CompilerDevelopment.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace CompilerDevelopment.GUI
         {
             InitializeComponent();
             Print();
+            //PrintTableOfLabel();
         }
 
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
@@ -34,7 +36,7 @@ namespace CompilerDevelopment.GUI
 
         private void Print()
         {
-            var result = PolisTableByDijkstra.TableOfAnalyzer.tableOfAnalysis.Select(
+            var result = MPA.TableOfAnalyzer.tableOfAnalysis.Select(
                 (n, i) =>
                 new
                 {
@@ -45,6 +47,20 @@ namespace CompilerDevelopment.GUI
 
                 }
             );
+
+            dataGrid.ItemsSource = result;
+        }
+
+        private void PrintTableOfLabel()
+        {
+            var result = TableOfLabels.tableOfLabels.Select(
+                (n, i) => new
+                {
+                    i = i,
+                    LabelName = n.Value.Item1,
+                    Value = n.Value.Item2
+                }
+                );
 
             dataGrid.ItemsSource = result;
         }

@@ -31,17 +31,7 @@
 
 
                 <DataGrid Grid.Row ="1" Name="dataGrid"></DataGrid>
-                <ScrollViewer Grid.Row=" 1" HorizontalScrollBarVisibility="Visible">
-
-                    <StackPanel Grid.Row="1">
-
-
-                        <DataGrid Name="lol"  AutoGenerateColumns="True" ItemsSource="{Binding Matrix}" 
-                  RowHeaderWidth="0"
-                  CanUserAddRows="False" CanUserDeleteRows="False" 
-                              />
-                    </StackPanel>
-                </ScrollViewer>
+              
                 <Grid Background="#B5CBEF" Grid.Row="2" Grid.ColumnSpan="3">
                     <Button Grid.Row="2" Width="40" Margin="5"  HorizontalAlignment="Center" Click="BackToMainMenu_Click">Back</Button>
                 </Grid>

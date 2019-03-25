@@ -29,10 +29,10 @@ namespace CompilerDevelopment.GUI
         {
             InitializeComponent();
             
-            //Print();
-            MatrixSize = Enumerable.Range(1, 10).ToArray();
-            //DataContext = this;
-            this.UpdateMatrix(2);
+            Print();
+           // MatrixSize = Enumerable.Range(1, 10).ToArray();
+          
+           // this.UpdateMatrix(2);
         }
 
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
@@ -40,12 +40,12 @@ namespace CompilerDevelopment.GUI
             Switcher.Switch(new MainMenu());
         }
 
-        private void Print()
-        {
-            var res = TableOfRelations.tableOfRelation.SelectMany(n => n.Value.Select(m => m.Value.ToString()));
-            dataGrid.ItemsSource = res;
+        //private void Print()
+        //{
+        //    var res = TableOfRelations.tableOfRelation.SelectMany(n => n.Value.Select(m => m.Value.ToString()));
+        //    dataGrid.ItemsSource = res;
 
-        }
+        //}
 
         public IList MatrixSize { get; private set; }
         public object Matrix { get; set; }
@@ -128,38 +128,51 @@ namespace CompilerDevelopment.GUI
                
                 dt.Rows.Add(r);
             }
-            lol.ItemsSource = dt.DefaultView;
+            //lol.ItemsSource = dt.DefaultView;
             PropertyChanged(this, new PropertyChangedEventArgs("Matrix"));
         }
-        //private void Print()
-        //{
-        //    var result = MPA.TableOfTransitions.tableOfTransitions.SelectMany(
-        //        n => n.Value.dictionary.Skip(1).Select(m =>
-        //        new
-        //        {
-        //            StateIndex = string.Empty,
-        //            SymbolClass = m.Key.ToString(),
-        //            NextStateIndex = m.Value.destination.ToString(),
-        //            Stack = m.Value.stack.ToString(),
-        //            SubProgramm = string.Empty
-        //        }).Prepend(new
-        //        {
-        //            StateIndex = n.Key.ToString(),
-        //            SymbolClass = n.Value.dictionary.First().Key.ToString(),
-        //            NextStateIndex = n.Value.dictionary.First().Value.destination.ToString(),
-        //            Stack = n.Value.dictionary.First().Value.stack.ToString(),
-        //            SubProgramm = string.Empty
-        //        }).Append(new
-        //        {
-        //            StateIndex = string.Empty,
-        //            SymbolClass = string.Empty,
-        //            NextStateIndex = string.Empty,
-        //            Stack = string.Empty,
-        //            SubProgramm = n.Value.Info
-        //        })
-        //    );
+        private void Print()
+        {
+            var result = MPA.TableOfTransitions.tableOfTransitions.SelectMany(
+                n => n.Value.dictionary.Skip(1).Select(m =>
+                new
+                {
+                    StateIndex = string.Empty,
+                    SymbolClass = m.Key.ToString(),
+                    NextStateIndex = m.Value.destination.ToString(),
+                    Stack = m.Value.stack.ToString(),
+                    SubProgramm = string.Empty
+                }).Prepend(new
+                {
+                    StateIndex = n.Key.ToString(),
+                    SymbolClass = n.Value.dictionary.First().Key.ToString(),
+                    NextStateIndex = n.Value.dictionary.First().Value.destination.ToString(),
+                    Stack = n.Value.dictionary.First().Value.stack.ToString(),
+                    SubProgramm = string.Empty
+                }).Append(new
+                {
+                    StateIndex = string.Empty,
+                    SymbolClass = string.Empty,
+                    NextStateIndex = string.Empty,
+                    Stack = string.Empty,
+                    SubProgramm = n.Value.Info
+                })
+            );
 
-        //    dataGrid.ItemsSource = result;
-        //}
+            dataGrid.ItemsSource = result;
+        }
     }
 }
+
+
+  //<ScrollViewer Grid.Row=" 1" HorizontalScrollBarVisibility= "Visible" >
+
+  //                  < StackPanel Grid.Row= "1" >
+
+
+  //                      < DataGrid Name= "lol"  AutoGenerateColumns= "True" ItemsSource= "{Binding Matrix}"
+  //                RowHeaderWidth= "0"
+  //                CanUserAddRows= "False" CanUserDeleteRows= "False"
+  //                            />
+  //                  </ StackPanel >
+  //              </ ScrollViewer >

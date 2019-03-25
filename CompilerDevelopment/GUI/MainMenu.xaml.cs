@@ -26,7 +26,7 @@ namespace CompilerDevelopment.GUI
         public MainMenu()
         {
             InitializeComponent();
-            PolisTableByDijkstra.TableOfTransitions.Loading();
+            MPA.TableOfTransitions.Loading();
 
 
             //Start Test 7 lab
@@ -60,6 +60,8 @@ namespace CompilerDevelopment.GUI
         private void TableOfTokens_Click(object sender, RoutedEventArgs e)
         {
             UserControl page = new TableOfTokensInterface();
+            // page = new TableOfAnalyzer();
+
             Switcher.Switch(page);
         }
 
@@ -82,7 +84,8 @@ namespace CompilerDevelopment.GUI
         }
         private void TableTransitions_Click(object sender, RoutedEventArgs e)
         {
-            UserControl page = new TableOfTransitions();
+            //UserControl page = new TableOfTransitions();
+            UserControl page = new TableOfAnalyzer();
             Switcher.Switch(page);
         }
         private void TableAnalyzer_Click(object sender, RoutedEventArgs e)

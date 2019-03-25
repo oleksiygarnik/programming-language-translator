@@ -28,6 +28,7 @@ namespace CompilerDevelopment.GUI
             InitializeComponent();
             //PrintTableCalculate();
             //PrintTable();
+            //Print();
             PrintTableLab7();
         }
         private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
@@ -56,7 +57,7 @@ namespace CompilerDevelopment.GUI
 
         private void Print()
         {
-            var result = PolisTableByDijkstra.TableOfAnalyzer.tableOfAnalysis.Select(
+            var result = MPA.TableOfAnalyzer.tableOfAnalysis.Select(
                 (n, i) =>
                 new
                 {

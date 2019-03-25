@@ -19,7 +19,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
 
         public List<string> Polis { get; set; }
 
-        public int CycleIndication { get; set; }
+        public int? CycleIndication { get; set; }
 
         public string CycleParameterVariable { get; set; }
 
@@ -29,7 +29,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
     {
         public static int CounterOfWorkingCells { get; set; } = 1;
 
-        public static Dictionary<int, string> tableOfWorkingCells { get; set; } = new Dictionary<int, string>();
+        public static Dictionary<int, (string, float)> tableOfWorkingCells { get; set; } = new Dictionary<int, (string, float)>();
 
         //public static string GenerateNewCell()
         //{
@@ -54,14 +54,29 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
             }
                 if (tableOfWorkingCells.Count == 0)
                 {
-                    tableOfWorkingCells.Add(1, "r1");
+                    tableOfWorkingCells.Add(1, ("r1", 0));
                 }
                 else
                 {
                         int lastElementInTable = tableOfWorkingCells.Count;
-                        tableOfWorkingCells.Add(lastElementInTable + 1, "r" + (lastElementInTable + 1));
+                        tableOfWorkingCells.Add(lastElementInTable + 1, ("r" + (lastElementInTable + 1), 0));
             }
-            return tableOfWorkingCells.Last().Value; // возвращаю название метки
+            return tableOfWorkingCells.Last().Value.Item1; // возвращаю название метки
+        }
+
+        public static bool TokenIsContained(string token)
+        {
+            if (tableOfWorkingCells.Count > 0)
+            {
+                foreach (KeyValuePair<int, (string, float)> KeyValue in tableOfWorkingCells)
+                {
+                    if (KeyValue.Value.Item1 == token)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 
@@ -69,7 +84,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
     {
       
 
-        public static int CycleIndication { get; set; } = 1;
+        public static int? CycleIndication { get; set; } = null;
 
         public static string CycleParameterVariable { get; set; } = null;
 
@@ -180,10 +195,22 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
 
             polisTableByDijkstraAlgo.Add(raw2);
         }
-
+    
         public static void CheckInputToken(string inputToken, ref List<string> polis, ref Stack<string> tokenStack, int numberOfElement)
         {
-   
+            //нужно проверить на символ присвоения и добавлять значения
+            if(inputToken == "=")
+            {
+                string value = polis[polis.Count() - 1];
+                string idn = polis[polis.Count() - 2];
+                for(int i = 0; i < TableOfIdentifiers.IdentifierListOfTokens.Count(); i++)
+                {
+                    if(idn == TableOfIdentifiers.IdentifierListOfTokens[i].View)
+                    {
+                        TableOfIdentifiers.IdentifierListOfTokens[i].Value = float.Parse(value);
+                    }
+                }
+            }
             // если входящий символ идентификатор или константа, то идет на выход в полис
             //удаляем со входящей строки
             if(TableOfIdentifiers.TokenIsContained(inputToken) || TableOfConstants.TokenIsContained(inputToken))
@@ -196,6 +223,10 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                 //если стек пустой(магазин), то заносим в стек 
                 if (tokenStack.Count == 0)
                 {
+                    if(inputToken == ";")
+                    {
+                        CheckStack(inputToken, ref tokenStack, ref polis);
+                    }
                     //проверка на унарный минус
                     if (inputToken == "-")
                     {
@@ -214,7 +245,8 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                     {
                         // проверка на унарный минус
                         if(TableOfIdentifiers.TokenIsContained(SourceTableOfTokens.SourceListOfTokens[numberOfElement-1].View) 
-                            || TableOfConstants.TokenIsContained(SourceTableOfTokens.SourceListOfTokens[numberOfElement-1].View))
+                            || TableOfConstants.TokenIsContained(SourceTableOfTokens.SourceListOfTokens[numberOfElement-1].View) 
+                            || SourceTableOfTokens.SourceListOfTokens[numberOfElement-1].View == ")")
                         {
                             CheckStack(inputToken, ref tokenStack, ref polis);
                         }
@@ -237,7 +269,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                     tokenStack.Pop();
                     polis.Add("IVD");
                 }
-                if ((inputToken == ";" || inputToken == "{") && tokenStack.Peek() == "float")
+                else if ((inputToken == ";" || inputToken == "{") && tokenStack.Peek() == "float")
                 {
                     tokenStack.Pop();
                     polis.Add("FVD");
@@ -274,7 +306,10 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
             bool finish = false;
             int priorCurrent = 0;
             int priorLastInStack = 0;
-
+            if(inputToken == ";" && tokenStack.Count == 0)
+            {
+                finish = true;
+            }
             if(inputToken == "(")
             {
                 tokenStack.Push(inputToken);
@@ -294,7 +329,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
             {
                 //нужно будет перегрузить метод
                 CycleIndication = 1;
-                tokenStack.Push(inputToken + " "+ TableOfLabels.GenerateNewLabel() + " "+ TableOfLabels.GenerateNewLabel() + " " + TableOfLabels.GenerateNewLabel() + " ");
+                tokenStack.Push(inputToken + " "+ TableOfLabels.GenerateNewLabel() + " "+ TableOfLabels.GenerateNewLabel() + " " + TableOfLabels.GenerateNewLabel());
                 finish = true;
             }
             else if(inputToken == "int") // Int Variable declaration
@@ -322,6 +357,11 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                 priorCurrent = FindPrior(inputToken);
                 if (tokenStack.Count == 0)
                 {
+                    if(inputToken == ";")
+                    {
+                        finish = true;
+                        break;
+                    }
                     tokenStack.Push(inputToken);
                     finish = true;
                     break;
@@ -357,7 +397,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
 
 
 
-                    if (inputToken == "then" && tokenStack.Peek() == "if")
+                    if (inputToken == ";" && tokenStack.Peek() == "if")
                     {
                         //тут нужно сгенирировать метку и добавить ее до if
                         string tmp = tokenStack.Pop();
@@ -365,7 +405,8 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
 
                         string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
                         // а в полиз нужно добавить название метки + УПХ. Например: m1 УПХ
-                        polis.Add(words.First() + "УПХ");
+                        polis.Add(words.First());
+                        polis.Add("УПХ");
                         break;
                     }
                     if (inputToken == "else" && tokenStack.Peek().Contains("if"))
@@ -377,20 +418,35 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
 
                         string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
                         //в полиз нужно добавить тогда m2 БП m1:
-                        polis.Add(words[1] + "БП" + words.First() + ":"); //пока что хз как оно будет работать, но гамнокодим
+                        //polis.Add(words[1] + "БП" + words.First() + ":"); //пока что хз как оно будет работать, но гамнокодим
+                        polis.Add(words[1]);
+                        polis.Add("БП");
+                        polis.Add(words.First() + ":");
+                        TableOfLabels.UpdateTable(words.First(), polis);
                         break;
                     }
                     if(inputToken == "endif" && tokenStack.Peek().Contains("if"))
                     {
-                        List<string> tmpList = new List<string>();
-                        tmpList = tokenStack.ToList();
-                        string elemForPolis = null; 
-                        for (int i = 0; i < tmpList.Count; i++)
-                        {
-                            string[] words = tmpList[i].Split(new char[] { ' ' });
-                            elemForPolis += words.Last() + ": ";
-                        }
-                        polis.Add(elemForPolis);
+
+                        string tmpList = tokenStack.First();
+                        string[] words = tmpList.Split(new char[] { ' ' });
+                        polis.Add(words.Last() + ":");
+                        TableOfLabels.UpdateTable(words.Last(), polis);
+                       // List<string> tmpList = new List<string>();
+                       // tmpList = tokenStack.ToList();
+                       // string elemForPolis = null;
+                       // for (int i = 0; i < tmpList.Count; i++)
+                       // {
+                         //   string[] words = tmpList[i].Split(new char[] { ' ' });
+                            //if (tmpList[i].Contains("m"))
+                            //{
+                       //         elemForPolis = words.Last() + ": ";
+                         //       polis.Add(elemForPolis);
+                           //     TableOfLabels.UpdateTable(words.Last(), polis);
+
+                         //   }
+                       // }
+                        //polis.Add(elemForPolis);
                         tokenStack.Pop();
                         //tokenStack.Clear();//????????????????????????
                         break;
@@ -411,92 +467,28 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                         CycleParameterVariable = polis[polis.Count - 1]; // записываем последний со стека в параметр цикла и дальше скидываем признак цикла до 0
                         CycleIndication = 0;
                     }
-                    if (inputToken == "step" && tokenStack.Peek().Contains("for"))
-                    {
-                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
+                    //if (inputToken == "step" && tokenStack.Peek().Contains("for"))
+                    //{
+                    //    string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
 
-                        polis.Add(TableOfWorkingCells.GenerateNewCell() + " 1 =" + words.First() + ": " + TableOfWorkingCells.GenerateNewCell());
-                        break;
-                    }
-                    if (inputToken == "to" && tokenStack.Peek().Contains("for"))
-                    {
-                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
-                        string secondElem = words[1];
-
-                        polis.Add("= " + TableOfWorkingCells.tableOfWorkingCells.First().Value + " 0 = " + secondElem + " " + "УПХ" + CycleParameterVariable + CycleParameterVariable + TableOfWorkingCells.tableOfWorkingCells.Last().Value + "+ = "
-                            + secondElem + ": " + TableOfWorkingCells.tableOfWorkingCells.First().Value + " 0 = " + CycleParameterVariable);
-                        break;
-                    }
-                    if (inputToken == "do" && tokenStack.Peek().Contains("for"))
-                    {
-                        TableOfWorkingCells.CounterOfWorkingCells = 0;
-                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
-
-                        polis.Add("- " + TableOfWorkingCells.tableOfWorkingCells.Last().Value + "* 0 <= " + words[2] + " УПХ");
-                        break;
-                    }
-                    if (inputToken == "next" && tokenStack.Peek().Contains("for"))
-                    {
-                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
-
-                        polis.Add(words.First() + " БП " + words[2] + ":");
-                        tokenStack.Pop();
-                        break;
-                    }
-
-
-
-                    //Цикл з неправильним порядком параметрів
-
+                    //    polis.Add(TableOfWorkingCells.GenerateNewCell() + " 1 =" + words.First() + ": " + TableOfWorkingCells.GenerateNewCell());
+                    //    break;
+                    //}
                     //if (inputToken == "to" && tokenStack.Peek().Contains("for"))
                     //{
                     //    string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
+                    //    string secondElem = words[1];
 
-                    //    polis.Add(TableOfWorkingCells.GenerateNewCell());
-                    //    polis.Add("1");
-                    //    polis.Add("=");
-                    //    polis.Add(words[0] + ":"); //mi
-                    //    TableOfWorkingCells.GenerateNewCell();
-                    //    polis.Add(TableOfWorkingCells.GenerateNewCell());
-
+                    //    polis.Add("= " + TableOfWorkingCells.tableOfWorkingCells.First().Value + " 0 = " + secondElem + " " + "УПХ" + CycleParameterVariable + CycleParameterVariable + TableOfWorkingCells.tableOfWorkingCells.Last().Value + "+ = "
+                    //        + secondElem + ": " + TableOfWorkingCells.tableOfWorkingCells.First().Value + " 0 = " + CycleParameterVariable);
                     //    break;
                     //}
-                    //if (inputToken == "step" && tokenStack.Peek().Contains("for"))
-                    //{
-                    //    polis.Add("=");
-                    //    break;
-                    //}
-
                     //if (inputToken == "do" && tokenStack.Peek().Contains("for"))
                     //{
+                    //    TableOfWorkingCells.CounterOfWorkingCells = 0;
                     //    string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
 
-                    //    polis.Add("=");
-                    //    polis.Add(TableOfWorkingCells.tableOfWorkingCells.First().Value);
-                    //    polis.Add("0");
-                    //    polis.Add("=");
-                    //    polis.Add(words[1]); //mi+1
-                    //    polis.Add("УПХ");
-                    //    polis.Add(CycleParameterVariable);
-                    //    polis.Add(CycleParameterVariable);
-                    //    polis.Add(TableOfWorkingCells.tableOfWorkingCells[1]);
-                    //    polis.Add("=");
-                    //    polis.Add(words[1] + ":"); //mi+1
-                    //    polis.Add(TableOfWorkingCells.tableOfWorkingCells.First().Value);
-                    //    polis.Add("0");
-                    //    polis.Add("=");
-                    //    polis.Add(CycleParameterVariable);
-                    //    polis.Add(TableOfWorkingCells.tableOfWorkingCells[2]);
-                    //    polis.Add("-");
-                    //    polis.Add(TableOfWorkingCells.tableOfWorkingCells[1]);
-                    //    polis.Add("*");
-                    //    polis.Add("0");
-                    //    polis.Add("<=");
-                    //    polis.Add(words[2]); //mi+2
-                    //    polis.Add("УПХ");
-
-
-                    //    TableOfWorkingCells.CounterOfWorkingCells = 0;
+                    //    polis.Add("- " + TableOfWorkingCells.tableOfWorkingCells.Last().Value + "* 0 <= " + words[2] + " УПХ");
                     //    break;
                     //}
                     //if (inputToken == "next" && tokenStack.Peek().Contains("for"))
@@ -507,6 +499,81 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                     //    tokenStack.Pop();
                     //    break;
                     //}
+
+
+
+                    //Цикл з неправильним порядком параметрів
+
+                    if (inputToken == "to" && tokenStack.Peek().Contains("for"))
+                    {
+                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
+
+                        polis.Add(TableOfWorkingCells.GenerateNewCell());
+                        polis.Add("1");
+                        polis.Add("=");
+                        polis.Add(words[0] + ":"); //mi
+                        TableOfLabels.UpdateTable(words[0], polis);
+
+                        TableOfWorkingCells.GenerateNewCell();
+                        polis.Add(TableOfWorkingCells.GenerateNewCell());
+
+                        break;
+                    }
+                    if (inputToken == "step" && tokenStack.Peek().Contains("for"))
+                    {
+                        polis.Add("=");
+                        polis.Add(TableOfWorkingCells.tableOfWorkingCells[2].Item1);
+                        break;
+                    }
+
+                    if (inputToken == "do" && tokenStack.Peek().Contains("for"))
+                    {
+                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
+
+                        polis.Add("=");
+                        polis.Add(TableOfWorkingCells.tableOfWorkingCells.First().Value.Item1);
+                        polis.Add("0");
+                        polis.Add("==");
+                        polis.Add(words[1]); //mi+1
+                        polis.Add("УПХ");
+                        polis.Add(CycleParameterVariable);
+                        polis.Add(CycleParameterVariable);
+                        polis.Add(TableOfWorkingCells.tableOfWorkingCells[2].Item1);
+                        polis.Add("+");
+                        polis.Add("=");
+                        polis.Add(words[1] + ":"); //mi+1
+                        TableOfLabels.UpdateTable(words[1], polis);
+
+                        polis.Add(TableOfWorkingCells.tableOfWorkingCells.First().Value.Item1);
+                        polis.Add("0");
+                        polis.Add("=");
+                        polis.Add(CycleParameterVariable);
+                        polis.Add(TableOfWorkingCells.tableOfWorkingCells[3].Item1);
+                        polis.Add("-");
+                        polis.Add(TableOfWorkingCells.tableOfWorkingCells[2].Item1);
+                        polis.Add("*");
+                        polis.Add("0");
+                        polis.Add("<=");
+                        polis.Add(words[2]); //mi+2
+                        polis.Add("УПХ");
+
+
+                        TableOfWorkingCells.CounterOfWorkingCells = 0;
+                        break;
+                    }
+                    if (inputToken == "next" && tokenStack.Peek().Contains("for"))
+                    {
+                        string[] words = tokenStack.Peek().Split(new char[] { ' ' }).Skip(1).ToArray();
+
+                        //polis.Add(words.First() + " БП " + words[2] + ":");
+                        polis.Add(words.First());
+                        polis.Add("БП");
+                        polis.Add(words[2] + ":");
+                        TableOfLabels.UpdateTable(words[2], polis);
+
+                        tokenStack.Pop();
+                        break;
+                    }
 
 
 
@@ -524,6 +591,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                     {
                         break;
                     }
+            
                     if((inputToken == ";" || inputToken == "{") && tokenStack.Peek() == "int")
                     {
                         tokenStack.Pop();
@@ -563,7 +631,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                 }
                 if (priorCurrent > priorLastInStack)
                 {
-                    if (inputToken == ";")
+                    if (inputToken == ";" )
                     {
                         finish = true;
                     }
@@ -575,6 +643,10 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                 }
                 else
                 {               
+                    //if(inputToken == ";")
+                    //{
+                    //    break;
+                    //}
                      polis.Add(tokenStack.Pop());
                 }
             } 

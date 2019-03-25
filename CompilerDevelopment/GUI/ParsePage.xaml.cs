@@ -82,13 +82,15 @@ namespace CompilerDevelopment.GUI
         private void Compiler_Click(object sender, RoutedEventArgs e)
         {
             ListError.Text = "";
-            PolisTableByDijkstra.TableOfAnalyzer.fullStack.Clear();
-            PolisTableByDijkstra.TableOfAnalyzer.tableOfAnalysis.Clear();
+            MPA.TableOfAnalyzer.fullStack.Clear();
+            MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
             SourceTableOfTokens.SourceListOfTokens.Clear();
             TableOfConstants.ConstantListOfTokens.Clear();
             TableOfIdentifiers.IdentifierListOfTokens.Clear();
 
-           
+
+            PolisTableByDijkstraAlgo.polisTableByDijkstraAlgo.Clear();
+            TableOfLabels.tableOfLabels.Clear();
 
             string path = @"D:\ASM\testLabCompiler1.txt";
             string code = TextCode.Text;
@@ -119,17 +121,64 @@ namespace CompilerDevelopment.GUI
                             }
                             else
                             {
+                                Storage.SyntaxAnalyzer = true;
                                 ListError.Text += "\n Программа успешно прошла синтаксический анализ";
                             }
                             break;
                         case "MPA":
-                            PolisTableByDijkstraAlgo.LoadingOperationsTable();
-                            PolisTableByDijkstraAlgo.LoadingPolisTableByDijkstraAlgorithm();
                             
-                            //MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
-                            //string error = MPA.TableOfAnalyzer.PushInTable(9);
-                            //ListError.Text += "\n";
-                            //ListError.Text += error;
+                            Storage.ListOfErrors.Clear();
+                            MPA.TableOfAnalyzer.tableOfAnalysis.Clear();
+                            string error = MPA.TableOfAnalyzer.PushInTable(9);
+                            ListError.Text += "\n";
+                            ListError.Text += error;
+
+
+                            string result = null;
+
+                            PolisTableByDijkstraAlgo.LoadingOperationsTable();
+                            if (Storage.SyntaxAnalyzer)
+                            {
+                                PolisTableByDijkstraAlgo.LoadingPolisTableByDijkstraAlgorithm();
+
+                                result = TableForExecutePolis.ExecutePolis();
+                            }
+
+
+                            
+
+                            
+
+                            if (!Storage.End)
+                            {
+                                ProgrammResult programmResult = new ProgrammResult(result);
+                                programmResult.ShowDialog();
+                            }
+                            if(Storage.ListOfErrors.Count!=0)
+                            {
+                                string errors = null;
+                                foreach(string str in Storage.ListOfErrors)
+                                {
+                                    errors += str + "\n";
+                                }
+                                ProgrammResult programmResult = new ProgrammResult(errors);
+                                programmResult.ShowDialog();
+
+                                
+                            }
+                            
+                            //if(programmResult.ShowDialog() == true)
+                            //{
+                                //if (programmResult.Password == "12345678")
+                                //    MessageBox.Show("Авторизация пройдена");
+                                //else
+                                //    MessageBox.Show("Неверный пароль");
+                            //}
+                            //else
+                            //{
+                                //MessageBox.Show("Авторизация не пройдена");
+                            //}
+                          
                             break;
 
                         case "UpstreamParsing":

@@ -46,6 +46,7 @@
                             </GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding Path=View}" Width="100">Лексема</GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding Path=Type}">Тип</GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Value}">Значение</GridViewColumn>
                         </GridView>
                     </ListView.View>
                     <ListView.ItemContainerStyle>

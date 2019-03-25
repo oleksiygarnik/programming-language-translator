@@ -315,7 +315,7 @@ namespace CompilerDevelopment.Entities
                                 ch = sr.Read();
                                 goto case 3;
                             }
-                            if (ch == 46)
+                            if (ch == 46) // ..
                             {
                                 token += Convert.ToChar(ch);
                                 ch = sr.Read();

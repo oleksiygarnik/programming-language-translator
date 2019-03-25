@@ -13,7 +13,7 @@ namespace CompilerDevelopment.Entities
         public static void AddTokenToIdentifierTable(string token, string type)
         {
             int number = IdentifierListOfTokens.Count;
-            Token tok = new Token(View: token, Code: 100, Row: 0, CodeIDN: 0, CodeCON: 0, NumberInTable: ++number, Type: type);
+            Token tok = new Token(View: token, Code: 100, Row: 0, CodeIDN: 0, CodeCON: 0, NumberInTable: ++number, Type: type, Value: -123456);
             IdentifierListOfTokens.Add(tok);
         }
 

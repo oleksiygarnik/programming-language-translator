@@ -13,5 +13,12 @@ namespace CompilerDevelopment.GUI
         public static Dictionary<string, string> valueForIdentifiers { get; set; } = new Dictionary<string, string>();
 
         public static string Expression { get; set; }
+
+        public static bool End { get; set; } = false;
+
+        public static bool SyntaxAnalyzer { get; set; } = false;
+
+
+        public static List<string> ListOfErrors { get; set; } = new List<string>();
     }
 }
