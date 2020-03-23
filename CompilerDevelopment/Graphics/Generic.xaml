@@ -195,7 +195,7 @@
                 </Path>
 
             </Grid>
-            <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Таблица разбора"></TextBlock>
+            <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="ПОЛИЗ"></TextBlock>
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -235,7 +235,7 @@
                 </Path>
 
             </Grid>
-            <TextBlock TextWrapping ="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Таблица переходов"></TextBlock>
+            <TextBlock TextWrapping ="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Таблица разбора"></TextBlock>
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -275,7 +275,7 @@
                 </Path>
 
             </Grid>
-            <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Настройки"></TextBlock>
+            <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Табл переходов"></TextBlock>
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

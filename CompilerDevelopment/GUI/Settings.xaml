@@ -38,7 +38,7 @@
 
 
                 <Grid Background="#B5CBEF" Grid.Row="0" Grid.ColumnSpan="3">
-                    <TextBlock Background="#B5CBEF" Grid.ColumnSpan="3" FontSize="20" Text="Settings for Compiler" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#4db6ea" />
+                    <TextBlock Background="#B5CBEF" Grid.ColumnSpan="3" FontSize="20" Text="Таблица переходов" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#4db6ea" />
                 </Grid>
                 <Button Name="button1" Click ="Button_Click" Grid.Column="1" Grid.Row="1" Margin="20, 20"  BorderBrush="LightBlue" BorderThickness="3" Content="Рекурсивний спуск"></Button>
                 <Button Name ="button2" Click="Button_Click_1" Grid.Column="1" Grid.Row="2" Margin="20, 20"  BorderBrush="OrangeRed" BorderThickness="3" Content="МПА"></Button>
@@ -46,9 +46,13 @@
 
 
                 <Button Click="Button_Click_3" Content="Back" Grid.Column="0" Grid.Row="3" Margin="5 70 180 5"></Button>
+                <DataGrid Name="dataGrid" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="3"></DataGrid>
                 <Grid Background="#B5CBEF" Grid.Row="4" Grid.ColumnSpan="3">
-
+                    
+                    
+                    
                     <TextBlock Grid.Row="3" Grid.ColumnSpan="3" FontSize="20" Text="Created By Leha Garnich" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#4db6ea" />
+                    <Button Content="Назад" HorizontalAlignment="Left" Margin="50,15,0,0" VerticalAlignment="Top" Width="75"  Click ="BackToMainMenu_Click"></Button>
                 </Grid>
             </Grid>
 

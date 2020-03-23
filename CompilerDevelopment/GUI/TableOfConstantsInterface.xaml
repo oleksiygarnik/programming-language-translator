@@ -56,9 +56,9 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
 
-                <Button Name="prev" Click ="Prev_Click" Width="60" HorizontalAlignment="Right" Grid.Row ="2" Grid.Column="0" Content="Prev" Margin="40 5" BorderBrush="LightBlue" BorderThickness="3"></Button>
-                <Button Name="next" Click ="Next_Click" Width="60" Grid.Row ="2" Grid.Column="1" HorizontalAlignment="Left" Content="Next" Margin="40 5" BorderBrush="LightBlue" BorderThickness="3"></Button>
-                <Button Grid.Row="2" Width="40" Margin="5" HorizontalAlignment="Left" Click="BackToMainMenu_Click">Back</Button>
+                <Button Name="prev" Click ="Prev_Click" Width="60" HorizontalAlignment="Right" Grid.Row ="2" Grid.Column="0" Content="Пред" Margin="40 5" BorderBrush="LightBlue" BorderThickness="3"></Button>
+                <Button Name="next" Click ="Next_Click" Width="60" Grid.Row ="2" Grid.Column="1" HorizontalAlignment="Left" Content="След" Margin="40 5" BorderBrush="LightBlue" BorderThickness="3"></Button>
+                <Button Grid.Row="2" Width="40" Margin="5" HorizontalAlignment="Left" Click="BackToMainMenu_Click">Назад</Button>
             </Grid>
         </Border>
     </Grid>

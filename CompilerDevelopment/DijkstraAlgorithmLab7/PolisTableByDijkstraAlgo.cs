@@ -432,23 +432,7 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                         string[] words = tmpList.Split(new char[] { ' ' });
                         polis.Add(words.Last() + ":");
                         TableOfLabels.UpdateTable(words.Last(), polis);
-                       // List<string> tmpList = new List<string>();
-                       // tmpList = tokenStack.ToList();
-                       // string elemForPolis = null;
-                       // for (int i = 0; i < tmpList.Count; i++)
-                       // {
-                         //   string[] words = tmpList[i].Split(new char[] { ' ' });
-                            //if (tmpList[i].Contains("m"))
-                            //{
-                       //         elemForPolis = words.Last() + ": ";
-                         //       polis.Add(elemForPolis);
-                           //     TableOfLabels.UpdateTable(words.Last(), polis);
-
-                         //   }
-                       // }
-                        //polis.Add(elemForPolis);
                         tokenStack.Pop();
-                        //tokenStack.Clear();//????????????????????????
                         break;
                     }
 
@@ -643,10 +627,6 @@ namespace CompilerDevelopment.DijkstraAlgorithmLab7
                 }
                 else
                 {               
-                    //if(inputToken == ";")
-                    //{
-                    //    break;
-                    //}
                      polis.Add(tokenStack.Pop());
                 }
             } 

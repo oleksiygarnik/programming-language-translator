@@ -50,7 +50,7 @@
 
                 <TextBox Name ="ListError" Grid.Row="2" Grid.ColumnSpan="4" Margin="100 0" TextAlignment="Left" VerticalScrollBarVisibility="Auto" >Список ошибок</TextBox>
 
-                <Button Grid.Row="3" Width="40" Margin="20 20" HorizontalAlignment="Left" Click="BackToMainMenu_Click">Back</Button>
+                <Button Grid.Row="3" Width="40" Margin="20 20" HorizontalAlignment="Left" Click="BackToMainMenu_Click">Назад</Button>
                 <Button Name ="parse" Click ="Compiler_Click" Grid.Row ="3" Grid.Column="2" Content="Парсить" Margin="15" BorderBrush="LightBlue" BorderThickness="3"></Button>
                 <Button Click ="Delete_Click" Grid.Row ="3" Grid.Column="1" Content="Очистить" Margin="15" BorderBrush="LightBlue" BorderThickness="3"></Button>
                 <Button Click ="Open_Click" Grid.Row ="3" Grid.Column="3" Content="Открыть файл" Margin="15" BorderBrush="LightBlue" BorderThickness="3"></Button>

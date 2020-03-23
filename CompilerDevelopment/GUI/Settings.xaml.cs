@@ -27,14 +27,21 @@ namespace CompilerDevelopment.GUI
         public Settings()
         {
             InitializeComponent();
-            TableOfRelations.LoadFields();
-            TableOfRelations.LoadEquels();
+            //TableOfRelations.LoadFields();
+            //TableOfRelations.LoadEquels();
 
-            TableOfRelations.LoadSupportTable();
-            TableOfRelations.LoadLessSign();
-            TableOfRelations.LoadMoreSign();
-            TableOfRelations.TwoNonTernminal();
+            //TableOfRelations.LoadSupportTable();
+            //TableOfRelations.LoadLessSign();
+            //TableOfRelations.LoadMoreSign();
+            //TableOfRelations.TwoNonTernminal();
+            Print();
         }
+
+        private void BackToMainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switch(new MainMenu());
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -64,6 +71,37 @@ namespace CompilerDevelopment.GUI
         {
 
             Switcher.Switch(new MainMenu());
+        }
+
+        private void Print()
+        {
+            var result = MPA.TableOfTransitions.tableOfTransitions.SelectMany(
+                n => n.Value.dictionary.Skip(1).Select(m =>
+                new
+                {
+                    StateIndex = string.Empty,
+                    SymbolClass = m.Key.ToString(),
+                    NextStateIndex = m.Value.destination.ToString(),
+                    Stack = m.Value.stack.ToString(),
+                    SubProgramm = string.Empty
+                }).Prepend(new
+                {
+                    StateIndex = n.Key.ToString(),
+                    SymbolClass = n.Value.dictionary.First().Key.ToString(),
+                    NextStateIndex = n.Value.dictionary.First().Value.destination.ToString(),
+                    Stack = n.Value.dictionary.First().Value.stack.ToString(),
+                    SubProgramm = string.Empty
+                }).Append(new
+                {
+                    StateIndex = string.Empty,
+                    SymbolClass = string.Empty,
+                    NextStateIndex = string.Empty,
+                    Stack = string.Empty,
+                    SubProgramm = n.Value.Info
+                })
+            );
+
+            dataGrid.ItemsSource = result;
         }
 
         //private void CheckBox2_Checked(object sender, RoutedEventArgs e)

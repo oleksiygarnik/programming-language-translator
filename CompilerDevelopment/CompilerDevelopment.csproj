@@ -98,6 +98,7 @@
     <Compile Include="GUI\TableOfTransitions.xaml.cs">
       <DependentUpon>TableOfTransitions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Lab9\TableOfIdentifiersLab9.cs" />
     <Compile Include="MPA\State.cs" />
     <Compile Include="MPA\TableOfAnalyzer.cs" />
     <Compile Include="MPA\TableOfTransitions.cs" />

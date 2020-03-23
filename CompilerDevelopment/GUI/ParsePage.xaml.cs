@@ -109,6 +109,8 @@ namespace CompilerDevelopment.GUI
                     switch (Settings.SettingMethod)
                     {
                         case "Recursion":
+                           
+
                             SyntaxAnalyzer.Analyze(0);
 
                             if (SyntaxAnalyzer.errors.Count > 0)
@@ -166,6 +168,7 @@ namespace CompilerDevelopment.GUI
 
                                 
                             }
+
                             
                             //if(programmResult.ShowDialog() == true)
                             //{

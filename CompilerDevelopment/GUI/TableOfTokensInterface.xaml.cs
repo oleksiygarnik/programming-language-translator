@@ -31,7 +31,7 @@ namespace CompilerDevelopment.GUI
             dictionary.ItemsSource = TableOfTokens.Tokens;
             //Load.PushDownStates();
 
-            Print();
+            //Print();
 
         }
 
@@ -72,35 +72,6 @@ namespace CompilerDevelopment.GUI
         //    dataGrid.ItemsSource = result;
         //}
 
-        private void Print()
-        {
-            var result = MPA.TableOfTransitions.tableOfTransitions.SelectMany(
-                n => n.Value.dictionary.Skip(1).Select(m =>
-                new
-                {
-                    StateIndex = string.Empty,
-                    SymbolClass = m.Key.ToString(),
-                    NextStateIndex = m.Value.destination.ToString(),
-                    Stack = m.Value.stack.ToString(),
-                    SubProgramm = string.Empty
-                }).Prepend(new
-                {
-                    StateIndex = n.Key.ToString(),
-                    SymbolClass = n.Value.dictionary.First().Key.ToString(),
-                    NextStateIndex = n.Value.dictionary.First().Value.destination.ToString(),
-                    Stack = n.Value.dictionary.First().Value.stack.ToString(),
-                    SubProgramm = string.Empty
-                }).Append(new
-                {
-                    StateIndex = string.Empty,
-                    SymbolClass = string.Empty,
-                    NextStateIndex = string.Empty,
-                    Stack = string.Empty,
-                    SubProgramm = n.Value.Info
-                })
-            );
-
-            dataGrid.ItemsSource = result;
-        }
+        
     }
 }
